@@ -20,6 +20,7 @@ using Google.Apis.YouTube.v3.Data;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace WpfAppMusicPlayer
 {
@@ -40,11 +41,8 @@ namespace WpfAppMusicPlayer
 
         public MainWindow()
         {
-
             InitializeComponent();
             LoadSongsFromFolder();
-            // Đăng ký sự kiện ValueChanged của Slider
-            sliderTimeMusic.ValueChanged += SliderTimeMusic_ValueChanged;
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             // Đặt giá trị ban đầu cho TextBlock là "00:00"
             timeMusicPlay.Text = "00:00";
@@ -52,6 +50,7 @@ namespace WpfAppMusicPlayer
             currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
             FillSongItems(currentListSongs);
             LoadHistory();
+            FillPopular(listeningHistory);
         }
 
         private void SongItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -95,10 +94,52 @@ namespace WpfAppMusicPlayer
                     isPlaying = true;
                     playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
                     AddSongToHistory(selectedSong);
+                    FillPopular(listeningHistory);
                 }
             }
         }
+        private void PopularSong_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Lặp qua tất cả các phần tử trong StackPanel
+            foreach (PopularSong song in listPopulars.Children)
+            {
+                // Đặt IsActive="False" cho tất cả các phần tử
+                song.IsActive = false;
+            }
+            // Đặt IsActive="True" cho phần tử được double-click
+            ((PopularSong)sender).IsActive = true;
 
+            var songPopular = sender as PopularSong;
+            if (songPopular != null)
+            {
+                SongInfo song = GetSongBySongName(songPopular.Title);
+
+                // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
+                mediaPlayer.Open(new Uri(song.FilePath));
+                // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
+                sliderTimeMusic.Maximum = song.Duration.TotalSeconds;
+                // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1); // Cập nhật giá trị mỗi giây
+                timer.Tick += (timerSender, timerArgs) => UpdateSliderValue();
+                timer.Start();
+                mediaPlayer.Play();
+                isPlaying = true;
+                playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
+                AddSongToHistory(song);
+            }
+        }
+        private SongInfo GetSongBySongName(string songName)
+        {
+            foreach (var song in allListSongs)
+            {
+                if(song.SongName == songName)
+                {
+                    return song;
+                }
+            }
+            return null;
+        }
         private void MediaPlayer_MediaEnded(object sender, EventArgs e)
         {
             playPauseButtonIcon.Kind = PackIconMaterialKind.Play; // Đổi icon thành "Play"
@@ -122,19 +163,21 @@ namespace WpfAppMusicPlayer
                 // Lấy tiêu đề bài hát
                 string songName = file.Tag.Title;
                 // Lấy tên ca sĩ
-                string singer = file.Tag.Artists[0];
+                string singerName = file.Tag.Artists[0];
                 string album = file.Tag.Album;
                 string fileName = Path.GetFileNameWithoutExtension(filePath);
                 TimeSpan durationSong = file.Properties.Duration;
+                string imgSinger = "..\\..\\..\\Images\\" + singerName + ".jpg";
 
                 // Sử dụng totalSeconds để khởi tạo Duration cho SongInfo
                 SongInfo songInfo = new SongInfo
                 {
                     FilePath = filePath,
                     SongName = songName,
-                    Singer = singer,
+                    SingerName = singerName,
                     Duration = durationSong,
-                    Album = album
+                    Album = album,
+                    ImgSinger = imgSinger
                 };
 
                 allListSongs.Add(songInfo);
@@ -229,7 +272,7 @@ namespace WpfAppMusicPlayer
             foreach (var song in allListSongs)
             {
                 // Kiểm tra nếu ca sĩ của bài hát trùng khớp với ca sĩ đưa vào và danh sách chưa đủ 7 bài hát
-                if (song.Singer.Equals(singer) && topSongs.Count < 7)
+                if (song.SingerName.Equals(singer) && topSongs.Count < 7)
                 {
                     // Thêm bài hát vào danh sách topSongs
                     topSongs.Add(song);
@@ -259,7 +302,7 @@ namespace WpfAppMusicPlayer
             // Thêm TextBlock "Sơn Tùng"
             TextBlock textBlock2 = new TextBlock
             {
-                Text = listSongs[0].Singer,
+                Text = listSongs[0].SingerName,
                 Foreground = new SolidColorBrush(Color.FromRgb(200, 230, 222)),
                 FontSize = 18,
                 FontWeight = FontWeights.SemiBold,
@@ -286,6 +329,33 @@ namespace WpfAppMusicPlayer
                 {
                     break;
                 }
+            }
+        }
+
+        private void FillPopular(Queue<SongInfo> listSongs)
+        {
+            // Xóa tất cả các phần tử trong StackPanel trước khi điền lại
+            listPopulars.Children.Clear();
+            for (int i = listSongs.Count - 1; i >= listSongs.Count - 4; i--)
+            {
+                var song = listSongs.ElementAt(i);
+                // Chuyển đổi đường dẫn hình ảnh sang kiểu ImageSource
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute);
+                bitmapImage.EndInit();
+                // Tạo một UserControl SongItem mới
+                var popularSong = new PopularSong
+                {
+                    Title = song.SongName, // Lấy tiêu đề bài hát từ danh sách songs
+                    Time = song.Duration.ToString(@"mm\:ss"), // Chuyển đổi thời lượng từ TimeSpan sang định dạng mm:ss
+                    Image = bitmapImage
+                };
+
+                // Gán sự kiện MouseDown cho UserControl SongItem
+                popularSong.MouseDoubleClick += PopularSong_DoubleClick;
+                // Thêm UserControl SongItem vào StackPanel
+                listPopulars.Children.Add(popularSong);
             }
         }
 
@@ -355,7 +425,10 @@ namespace WpfAppMusicPlayer
             if (System.IO.File.Exists("listeningHistory.json"))
             {
                 string json = System.IO.File.ReadAllText("listeningHistory.json");
-                listeningHistory = new Queue<SongInfo>(JsonConvert.DeserializeObject<SongInfo[]>(json));
+                if (!string.IsNullOrEmpty(json))
+                {
+                    listeningHistory = new Queue<SongInfo>(JsonConvert.DeserializeObject<SongInfo[]>(json));
+                }
             }
         }
 
@@ -560,7 +633,7 @@ namespace WpfAppMusicPlayer
             LoadSongsFromFolder();
             AddAlbumsList(allListSongs);
             int i = 0;
-            foreach (var album  in albums)
+            foreach (var album in albums)
             {
                 i++;
                 var songItem = new SongItem
@@ -631,5 +704,7 @@ namespace WpfAppMusicPlayer
             currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
             FillSongItems(currentListSongs);
         }
+
+
     }
 }

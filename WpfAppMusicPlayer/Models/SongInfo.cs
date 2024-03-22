@@ -9,9 +9,10 @@ namespace WpfAppMusicPlayer.Models
     public class SongInfo
     {
         public string FilePath { get; set; }
-        public string SongName { get; set; }
-        public string Singer { get; set; }
+        public string? SongName { get; set; }
+        public string? SingerName { get; set; }
         public TimeSpan Duration { get; set; }
         public string? Album { get; set; }
+        public string? ImgSinger { get; set; }
     }
 }

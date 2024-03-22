@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Semester 7\\PRN211\\Ass\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {}
+    "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {}
   },
   "projects": {
-    "D:\\Semester 7\\PRN211\\Ass\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {
+    "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Semester 7\\PRN211\\Ass\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
+        "projectUniqueName": "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
         "projectName": "WpfAppMusicPlayer",
-        "projectPath": "D:\\Semester 7\\PRN211\\Ass\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
+        "projectPath": "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Semester 7\\PRN211\\Ass\\Music-Players-WPF\\WpfAppMusicPlayer\\obj\\",
+        "outputPath": "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

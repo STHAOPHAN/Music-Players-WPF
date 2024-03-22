@@ -29,8 +29,9 @@ namespace WpfAppMusicPlayer
     public partial class MainWindow : Window
     {
         private MediaPlayer mediaPlayer = new MediaPlayer();
-        private List<SongInfo> songs = new List<SongInfo>();
-        private List<SongInfo> topSongs = new List<SongInfo>();
+        private List<SongInfo> allListSongs = new List<SongInfo>(); // List chứa full bài hát
+        private List<SongInfo> currentListSongs = new List<SongInfo>(); // List bài đang được phát
+        private Queue<SongInfo> listeningHistory = new Queue<SongInfo>();
         private List<Album> albums = new List<Album>();
 
         private int currentSongIndex = -1;
@@ -48,8 +49,9 @@ namespace WpfAppMusicPlayer
             // Đặt giá trị ban đầu cho TextBlock là "00:00"
             timeMusicPlay.Text = "00:00";
 
-            topSongs = GetSongsBySinger("Sơn Tùng M-TP");
-            FillSongItems(topSongs);
+            currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
+            FillSongItems(currentListSongs);
+            LoadHistory();
         }
 
         private void SongItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -80,8 +82,7 @@ namespace WpfAppMusicPlayer
                 {
                     // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                     currentSongIndex = songIndex;
-                    var selectedSong = topSongs[currentSongIndex];
-                    currentSongplayingPath = selectedSong.FilePath;
+                    var selectedSong = currentListSongs[currentSongIndex];
                     mediaPlayer.Open(new Uri(selectedSong.FilePath));
                     // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                     sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
@@ -93,6 +94,7 @@ namespace WpfAppMusicPlayer
                     mediaPlayer.Play();
                     isPlaying = true;
                     playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
+                    AddSongToHistory(selectedSong);
                 }
             }
         }
@@ -110,9 +112,9 @@ namespace WpfAppMusicPlayer
         {
             string musicFolderPath = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));
 
-            if (songs.Count > 0)
+            if (allListSongs.Count > 0)
             {
-                songs.Clear();
+                allListSongs.Clear();
             }
             foreach (string filePath in Directory.GetFiles(musicFolderPath, "*.mp3"))
             {
@@ -135,24 +137,24 @@ namespace WpfAppMusicPlayer
                     Album = album
                 };
 
-                songs.Add(songInfo);
+                allListSongs.Add(songInfo);
             };
         }
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            if (topSongs.Count > 0)
+            if (currentListSongs.Count > 0)
             {
                 if (currentSongIndex == 0)
                 {
-                    currentSongIndex = topSongs.Count - 1;
+                    currentSongIndex = currentListSongs.Count - 1;
                 }
                 else currentSongIndex--;
 
-                var selectedSong = topSongs[currentSongIndex];
+                var selectedSong = currentListSongs[currentSongIndex];
                 mediaPlayer.Open(new Uri(selectedSong.FilePath));
                 // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
-                sliderTimeMusic.Maximum = topSongs[currentSongIndex].Duration.TotalSeconds;
+                sliderTimeMusic.Maximum = currentListSongs[currentSongIndex].Duration.TotalSeconds;
                 // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
                 DispatcherTimer timer = new DispatcherTimer();
                 timer.Interval = TimeSpan.FromSeconds(1); // Cập nhật giá trị mỗi giây
@@ -218,13 +220,13 @@ namespace WpfAppMusicPlayer
             }
         }
 
-        private List<SongInfo>? GetSongsBySinger(string singer)
+        private List<SongInfo> GetSongsBySinger(string singer)
         {
             // Tạo một danh sách mới để lưu các bài hát của ca sĩ
             List<SongInfo> topSongs = new List<SongInfo>();
 
             // Lặp qua danh sách các bài hát
-            foreach (var song in songs)
+            foreach (var song in allListSongs)
             {
                 // Kiểm tra nếu ca sĩ của bài hát trùng khớp với ca sĩ đưa vào và danh sách chưa đủ 7 bài hát
                 if (song.Singer.Equals(singer) && topSongs.Count < 7)
@@ -237,6 +239,7 @@ namespace WpfAppMusicPlayer
             // Trả về danh sách top 7 bài hát của ca sĩ
             return topSongs;
         }
+
         private void FillSongItems(List<SongInfo> listSongs)
         {
             // Xóa tất cả các phần tử trong StackPanel trước khi điền lại
@@ -279,7 +282,7 @@ namespace WpfAppMusicPlayer
                 songItem.MouseDown += SongItem_MouseDown;
                 // Thêm UserControl SongItem vào StackPanel
                 listDailySinger.Children.Add(songItem);
-                if(i > 6)
+                if (i > 6)
                 {
                     break;
                 }
@@ -293,15 +296,13 @@ namespace WpfAppMusicPlayer
 
             // Thiết lập âm lượng cho đối tượng MediaPlayer
             mediaPlayer.Volume = volumeValue / 100.0; // MediaPlayer.Volume yêu cầu giá trị trong khoảng từ 0 đến 1
-
-            // Hiển thị giá trị âm lượng (ví dụ: trong một TextBlock)
-            // textBlockVolumeValue.Text = volumeValue.ToString(); // Nếu bạn muốn hiển thị giá trị âm lượng
         }
+
         private void NextSong()
         {
-            if (topSongs.Count > 0)
+            if (currentListSongs.Count > 0)
             {
-                if (currentSongIndex < topSongs.Count - 1)
+                if (currentSongIndex < currentListSongs.Count - 1)
                 {
                     currentSongIndex++;
                 }
@@ -310,10 +311,10 @@ namespace WpfAppMusicPlayer
                     currentSongIndex = 0; // Quay lại bài đầu tiên nếu đã phát hết danh sách bài hát
                 }
 
-                var selectedSong = topSongs[currentSongIndex];
+                var selectedSong = currentListSongs[currentSongIndex];
                 mediaPlayer.Open(new Uri(selectedSong.FilePath));
                 // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
-                sliderTimeMusic.Maximum = topSongs[currentSongIndex].Duration.TotalSeconds;
+                sliderTimeMusic.Maximum = currentListSongs[currentSongIndex].Duration.TotalSeconds;
                 // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
                 DispatcherTimer timer = new DispatcherTimer();
                 timer.Interval = TimeSpan.FromSeconds(1); // Cập nhật giá trị mỗi giây
@@ -322,6 +323,39 @@ namespace WpfAppMusicPlayer
                 mediaPlayer.Play();
                 isPlaying = true;
                 playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
+            }
+        }
+
+        // Thêm một bài hát vào lịch sử và lưu vào file JSON
+        public void AddSongToHistory(SongInfo song)
+        {
+            listeningHistory.Enqueue(song); // Thêm bài hát vào cuối hàng đợi
+            while (listeningHistory.Count > 4)
+            {
+                listeningHistory.Dequeue(); // Nếu vượt quá số lượng tối đa, loại bỏ bài hát cũ nhất
+            }
+            SaveHistory(); // Lưu lại lịch sử mới vào file JSON
+        }
+        // Lưu lịch sử vào file JSON
+        private void SaveHistory()
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(listeningHistory.ToArray(), Newtonsoft.Json.Formatting.Indented);
+                System.IO.File.WriteAllText("listeningHistory.json", json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi ghi dữ liệu vào tệp: " + ex.Message);
+            }
+        }
+        // Load lịch sử từ file JSON
+        private void LoadHistory()
+        {
+            if (System.IO.File.Exists("listeningHistory.json"))
+            {
+                string json = System.IO.File.ReadAllText("listeningHistory.json");
+                listeningHistory = new Queue<SongInfo>(JsonConvert.DeserializeObject<SongInfo[]>(json));
             }
         }
 
@@ -498,7 +532,7 @@ namespace WpfAppMusicPlayer
         {
             tbMainTitle.Text = "Songs";
             LoadSongsFromFolder();
-            ViewSongsList(songs);
+            ViewSongsList(allListSongs);
         }
 
         private void ViewSongsList(List<SongInfo> songs)
@@ -524,7 +558,7 @@ namespace WpfAppMusicPlayer
             tbMainTitle.Text = "Albums";
             listDailySinger.Children.Clear();
             LoadSongsFromFolder();
-            AddAlbumsList(songs);
+            AddAlbumsList(allListSongs);
             int i = 0;
             foreach (var album  in albums)
             {
@@ -594,8 +628,8 @@ namespace WpfAppMusicPlayer
         {
             tbMainTitle.Text = "Home";
             LoadSongsFromFolder();
-            topSongs = GetSongsBySinger("Sơn Tùng M-TP");
-            FillSongItems(topSongs);
+            currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
+            FillSongItems(currentListSongs);
         }
     }
 }

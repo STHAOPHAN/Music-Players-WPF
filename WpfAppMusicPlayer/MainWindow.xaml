@@ -141,10 +141,12 @@
                     <TextBlock Text="Popular" Style="{StaticResource titleText}" Margin="0 0 0 10" FontSize="28"/>
 
                     <!-- Populars -->
-                    <uc:PopularSong Title="My House" Time="03:13" Image="/Images/Amee.jpg"/>
-                    <uc:PopularSong Title="Blank Space" Time="04:02" Image="/Images/Bray.jpg" IsActive="True"/>
-                    <uc:PopularSong Title="Love Story" Time="05:04" Image="/Images/BichPhuong.jpg"/>
-                    <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/TrungQuanIdol.jpg"/>
+                    <StackPanel x:Name="listPopulars">
+                        <uc:PopularSong Title="My House" Time="03:13" Image="/Images/A mê.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                        <uc:PopularSong Title="Blank Space" Time="04:02" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick" IsActive="True"/>
+                        <uc:PopularSong Title="Love Story" Time="05:04" Image="/Images/BichPhuong.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                        <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/TrungQuanIdol.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                    </StackPanel>
 
                     <TextBlock Text="Playlists" Style="{StaticResource titleText}" Margin="0 30 0 20" FontSize="24"/>
 
@@ -183,7 +185,7 @@
                         <Icon:PackIconMaterial Kind="SkipNext" Style="{StaticResource playerButtonIcon}" />
                     </Button>
 
-                    <Slider Style="{DynamicResource SliderStyle1}" x:Name="sliderTimeMusic" IsSelectionRangeEnabled="True" VerticalAlignment="Center" Value="5" Width="350" SelectionEnd="{Binding ElementName=slider, Path=Value}"/>
+                    <Slider Style="{DynamicResource SliderStyle1}" x:Name="sliderTimeMusic" IsSelectionRangeEnabled="True" VerticalAlignment="Center" Value="5" Width="350" SelectionEnd="{Binding ElementName=slider, Path=Value}" ValueChanged="SliderTimeMusic_ValueChanged"/>
                     <!-- TextBlock để hiển thị thời gian -->
                     <TextBlock x:Name="timeMusicPlay" VerticalAlignment="Center" Margin="5 0 0 0" FontSize="12" FontWeight="Bold" Foreground="White"/>
 

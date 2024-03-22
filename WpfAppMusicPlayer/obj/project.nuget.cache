@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EUgCDrNIhEDAJAhefeXbyAG+exhUMnwtVsf/Y4oahAtPEMOfkSZ8fZvpBqE5RvuQgTIWfkeCoQiWhrkxNbyiyA==",
+  "dgSpecHash": "y7ZiCt4fYmpsMI+BTbO5LH2DtN2Mn0BO+uegDRHSgQQ+sX44SQOGl1A8DzQfD2sLgSw/VRdvpbQLLIpNu6RAeQ==",
   "success": true,
-  "projectFilePath": "D:\\Semester 7\\PRN211\\Ass\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
+  "projectFilePath": "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\anglesharp\\1.0.7\\anglesharp.1.0.7.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\ffmpeg.net\\1.1.0\\ffmpeg.net.1.1.0.nupkg.sha512",

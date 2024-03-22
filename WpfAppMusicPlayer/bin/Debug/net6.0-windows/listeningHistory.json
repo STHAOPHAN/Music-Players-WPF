@@ -1,23 +1,34 @@
 [
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
-    "SongName": "Chúng Ta Của Tương Lai",
-    "Singer": "Sơn Tùng M-TP",
-    "Duration": "00:04:09.9654375",
-    "Album": "NhacCuaTui.com"
+    "FilePath": "C:\\Users\\ADMIN\\Music\\Muộn Rồi Mà Sao Còn-SonTungMTP.mp3",
+    "SongName": "Muộn Rồi Mà Sao Còn",
+    "SingerName": "Sơn Tùng M-TP",
+    "Duration": "00:04:35.9760000",
+    "Album": "Muộn Rồi Mà Sao Còn",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
   },
   {
     "FilePath": "C:\\Users\\ADMIN\\Music\\Chạy Ngay Đi-SonTungMTP.mp3",
     "SongName": "Chạy Ngay Đi",
-    "Singer": "Sơn Tùng M-TP",
+    "SingerName": "Sơn Tùng M-TP",
     "Duration": "00:04:08.0628750",
-    "Album": "Chạy Ngay Đi (Single)"
+    "Album": "Chạy Ngay Đi (Single)",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
   },
   {
     "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
     "SongName": "Chúng Ta Của Tương Lai",
-    "Singer": "Sơn Tùng M-TP",
+    "SingerName": "Sơn Tùng M-TP",
     "Duration": "00:04:09.9654375",
-    "Album": "NhacCuaTui.com"
+    "Album": "NhacCuaTui.com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
+    "SongName": "Chúng Ta Của Tương Lai",
+    "SingerName": "Sơn Tùng M-TP",
+    "Duration": "00:04:09.9654375",
+    "Album": "NhacCuaTui.com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
   }
 ]

@@ -20,6 +20,7 @@ using Google.Apis.YouTube.v3.Data;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace WpfAppMusicPlayer
 {
@@ -56,47 +57,55 @@ namespace WpfAppMusicPlayer
 
         private void SongItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var songItem = sender as SongItem;
-            if (songItem != null)
+            if (e.ChangedButton == MouseButton.Right)
             {
-                // Tìm vị trí của bài hát trong danh sách
-                int songIndex = Convert.ToInt32(songItem.Number) - 1;
-                // Kiểm tra xem có phải bài hát đang phát hiện tại không
-                if (currentSongIndex == songIndex)
+                SongItem songItem = (SongItem)sender;
+                songItem.ContextMenu.IsOpen = true;
+            } else
+            {
+                var songItem = sender as SongItem;
+                if (songItem != null)
                 {
-                    // Nếu là bài hát đang phát, chỉ cần tạm dừng hoặc tiếp tục phát
-                    if (isPlaying)
+                    // Tìm vị trí của bài hát trong danh sách
+                    int songIndex = Convert.ToInt32(songItem.Number) - 1;
+                    // Kiểm tra xem có phải bài hát đang phát hiện tại không
+                    if (currentSongIndex == songIndex)
                     {
-                        mediaPlayer.Pause();
-                        isPlaying = false;
-                        playPauseButtonIcon.Kind = PackIconMaterialKind.Play;
+                        // Nếu là bài hát đang phát, chỉ cần tạm dừng hoặc tiếp tục phát
+                        if (isPlaying)
+                        {
+                            mediaPlayer.Pause();
+                            isPlaying = false;
+                            playPauseButtonIcon.Kind = PackIconMaterialKind.Play;
+                        }
+                        else
+                        {
+                            mediaPlayer.Play();
+                            isPlaying = true;
+                            playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
+                        }
                     }
                     else
                     {
+                        // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
+                        currentSongIndex = songIndex;
+                        var selectedSong = currentListSongs[currentSongIndex];
+                        mediaPlayer.Open(new Uri(selectedSong.FilePath));
+                        // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
+                        sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
+                        // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
+                        DispatcherTimer timer = new DispatcherTimer();
+                        timer.Interval = TimeSpan.FromSeconds(1); // Cập nhật giá trị mỗi giây
+                        timer.Tick += (timerSender, timerArgs) => UpdateSliderValue();
+                        timer.Start();
                         mediaPlayer.Play();
                         isPlaying = true;
                         playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
+                        AddSongToHistory(selectedSong);
                     }
                 }
-                else
-                {
-                    // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
-                    currentSongIndex = songIndex;
-                    var selectedSong = currentListSongs[currentSongIndex];
-                    mediaPlayer.Open(new Uri(selectedSong.FilePath));
-                    // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
-                    sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
-                    // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
-                    DispatcherTimer timer = new DispatcherTimer();
-                    timer.Interval = TimeSpan.FromSeconds(1); // Cập nhật giá trị mỗi giây
-                    timer.Tick += (timerSender, timerArgs) => UpdateSliderValue();
-                    timer.Start();
-                    mediaPlayer.Play();
-                    isPlaying = true;
-                    playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
-                    AddSongToHistory(selectedSong);
-                }
             }
+
         }
 
         private void MediaPlayer_MediaEnded(object sender, EventArgs e)
@@ -281,6 +290,7 @@ namespace WpfAppMusicPlayer
                 // Gán sự kiện MouseDown cho UserControl SongItem
                 songItem.MouseDown += SongItem_MouseDown;
                 // Thêm UserControl SongItem vào StackPanel
+                songItem.ContextMenu = GetSongItemContextMenu();
                 listDailySinger.Children.Add(songItem);
                 if (i > 6)
                 {
@@ -544,13 +554,76 @@ namespace WpfAppMusicPlayer
                 i++;
                 var songItem = new SongItem
                 {
+                    SongInfo = song,
                     Number = i.ToString("00"),
                     Title = song.SongName,
                     Time = song.Duration.ToString(@"mm\:ss")
                 };
+                songItem.ContextMenu = GetSongItemContextMenu();
+                songItem.ContextMenu.Tag = songItem.SongInfo;
+
                 songItem.MouseDown += SongItem_MouseDown;
+
                 listDailySinger.Children.Add(songItem);
             }
+        }
+
+        private ContextMenu GetSongItemContextMenu()
+        {
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem editMenuItem = new MenuItem() { Header = "Edit" , Icon = new Image { Source = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/Icons/Edit.png", UriKind.RelativeOrAbsolute)) } };
+            MenuItem addToAlbumMenuItem = new MenuItem() { Header = "Add to album ...", Icon = new Image { Source = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/Icons/Add.png", UriKind.RelativeOrAbsolute)) } };
+            
+            MenuItem openFolderMenuItem = new MenuItem() { Header = "Open Containing Folder", Icon = new Image { Source = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/Icons/OpenFolder.png", UriKind.RelativeOrAbsolute)) } };
+            MenuItem propertiesMenuItem = new MenuItem() { Header = "Properties", Icon = new Image { Source = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/Icons/Properties.png", UriKind.RelativeOrAbsolute)) } };
+
+            AddAlbumsList(allListSongs);
+            foreach (var album in albums)
+            {
+                MenuItem albumItem = new MenuItem() { Header = album.Name, Icon = new Image { Source = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/Icons/Album.png", UriKind.RelativeOrAbsolute)) } };
+                albumItem.Click += AddToAlbum_Click;
+                addToAlbumMenuItem.Items.Add(albumItem);
+            }
+
+            editMenuItem.Click += EditMenuItem_Click;
+            openFolderMenuItem.Click += OpenFolderMenuItem_Click;     
+            propertiesMenuItem.Click += PropertiesMenuItem_Click;
+
+            contextMenu.Items.Add(editMenuItem);
+            contextMenu.Items.Add(openFolderMenuItem);
+            contextMenu.Items.Add(addToAlbumMenuItem);
+            contextMenu.Items.Add(propertiesMenuItem);
+
+            return contextMenu;
+        }
+
+        private void AddToAlbum_Click(object sender, RoutedEventArgs e)
+        {
+            // Xử lý sự kiện khi click vào Edit
+        }
+
+        private void EditMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Xử lý sự kiện khi click vào Edit
+        }
+
+        private void OpenFolderMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)sender;
+
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            SongInfo songInfo = (SongInfo)contextMenu.Tag;
+
+            string songPath = songInfo.FilePath;
+
+            Process.Start("explorer.exe", $"/select,\"{songPath}\"");
+        }
+
+        private void PropertiesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Xử lý sự kiện khi click vào Properties
         }
 
         private void btnViewAlbums_Click(object sender, RoutedEventArgs e)

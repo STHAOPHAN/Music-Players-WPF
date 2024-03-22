@@ -100,26 +100,8 @@ namespace WpfAppMusicPlayer
                         isPlaying = true;
                         playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
                         AddSongToHistory(selectedSong);
+                        FillPopular(listeningHistory);
                     }
-                }
-                else
-                {
-                    // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
-                    currentSongIndex = songIndex;
-                    var selectedSong = currentListSongs[currentSongIndex];
-                    mediaPlayer.Open(new Uri(selectedSong.FilePath));
-                    // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
-                    sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
-                    // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
-                    DispatcherTimer timer = new DispatcherTimer();
-                    timer.Interval = TimeSpan.FromSeconds(1); // Cập nhật giá trị mỗi giây
-                    timer.Tick += (timerSender, timerArgs) => UpdateSliderValue();
-                    timer.Start();
-                    mediaPlayer.Play();
-                    isPlaying = true;
-                    playPauseButtonIcon.Kind = PackIconMaterialKind.Pause;
-                    AddSongToHistory(selectedSong);
-                    FillPopular(listeningHistory);
                 }
             }
 
@@ -343,6 +325,7 @@ namespace WpfAppMusicPlayer
                 // Tạo một UserControl SongItem mới
                 var songItem = new SongItem
                 {
+                    SongInfo = song,
                     Number = i.ToString("00"), // Đánh số thứ tự bài hát
                     Title = song.SongName, // Lấy tiêu đề bài hát từ danh sách songs
                     Time = song.Duration.ToString(@"mm\:ss") // Chuyển đổi thời lượng từ TimeSpan sang định dạng mm:ss
@@ -351,6 +334,7 @@ namespace WpfAppMusicPlayer
                 songItem.MouseDown += SongItem_MouseDown;
                 // Thêm UserControl SongItem vào StackPanel
                 songItem.ContextMenu = GetSongItemContextMenu();
+                songItem.ContextMenu.Tag = songItem.SongInfo;
                 listDailySinger.Children.Add(songItem);
                 if (i > 6)
                 {

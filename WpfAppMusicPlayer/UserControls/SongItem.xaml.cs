@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using WpfAppMusicPlayer.Models;
 
 namespace WpfAppMusicPlayer.UserControls
 {
@@ -9,6 +10,7 @@ namespace WpfAppMusicPlayer.UserControls
         {
             InitializeComponent();
         }
+        public SongInfo SongInfo { get; set; }
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }

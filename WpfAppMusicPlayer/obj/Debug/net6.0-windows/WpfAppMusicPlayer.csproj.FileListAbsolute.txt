@@ -247,6 +247,7 @@ D:\Semester 7\PRN211\Ass\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-wi
 D:\Semester 7\PRN211\Ass\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\WpfAppMusicPlayer.pdb
 D:\Semester 7\PRN211\Ass\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\WpfAppMusicPlayer.genruntimeconfig.cache
 D:\Semester 7\PRN211\Ass\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\ref\WpfAppMusicPlayer.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\Images\Icons\Album.png
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\WpfAppMusicPlayer.exe
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\WpfAppMusicPlayer.deps.json
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\WpfAppMusicPlayer.runtimeconfig.json

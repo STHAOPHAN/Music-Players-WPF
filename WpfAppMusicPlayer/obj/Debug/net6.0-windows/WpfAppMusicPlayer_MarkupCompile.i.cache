@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\
+C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\
 WpfAppMusicPlayer
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-D:\Git\Music-Players-WPF\WpfAppMusicPlayer\App.xaml
+C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\App.xaml
 41563956972
 
 13-1923809620
-255-1133489519
+269-1753544182
 MainWindow.xaml;UserControls\Playlist.xaml;UserControls\PopularSong.xaml;UserControls\SongItem.xaml;
 
-False
+True
 

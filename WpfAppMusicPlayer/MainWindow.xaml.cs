@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using NAudio.Wave;
 
 namespace WpfAppMusicPlayer
 {
@@ -779,6 +780,61 @@ namespace WpfAppMusicPlayer
             FillSongItems(currentListSongs);
         }
 
+        private async void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+           
 
+            try
+            {
+                txtSearchQuery.Text = "Listening Now.....";
+
+                // Sử dụng NAudio để ghi âm từ microphone và lưu vào một MemoryStream
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    using (WaveInEvent waveIn = new WaveInEvent())
+                    {
+                        // Cấu hình WaveInEvent để ghi âm từ default audio device
+                        waveIn.DeviceNumber = 0;
+                        waveIn.WaveFormat = new WaveFormat(16000, 1); // Sample rate 16000Hz, 16-bit, mono
+
+                        // Xử lý sự kiện khi có dữ liệu âm thanh ghi từ microphone
+                        waveIn.DataAvailable += (s, args) =>
+                        {
+                            stream.Write(args.Buffer, 0, args.BytesRecorded);
+                        };
+
+                        // Bắt đầu ghi âm
+                        waveIn.StartRecording();
+
+                        // Chờ một khoảng thời gian (ví dụ: 5 giây) sau đó dừng ghi âm
+                        await Task.Delay(TimeSpan.FromSeconds(5)); // Đợi 5 giây
+                        waveIn.StopRecording();
+                    }
+
+                    // Đặt con trỏ về đầu của MemoryStream để đọc dữ liệu âm thanh
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    // Khởi tạo một instance của SpeechToTextHelper
+                    var speechToTextHelper = new SpeechToTextHelper();
+
+                    // Gọi phương thức RecognizeSpeechFromAudioStreamAsync để nhận dạng giọng nói từ stream audio
+                    string transcript = await speechToTextHelper.RecognizeSpeechFromAudioStreamAsync(stream);
+
+                    // Hiển thị kết quả nhận dạng trong textBox1
+                    if (!string.IsNullOrEmpty(transcript))
+                    {
+                        txtSearchQuery.Text = transcript;
+                    }
+                    else
+                    {
+                        txtSearchQuery.Text = "No recognition result.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error recognizing speech: {ex.Message}");
+            }
+        }
     }
 }

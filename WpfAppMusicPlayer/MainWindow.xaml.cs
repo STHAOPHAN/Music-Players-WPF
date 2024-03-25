@@ -107,10 +107,19 @@ namespace WpfAppMusicPlayer
                         // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                         currentSongIndex = songIndex;
                         var selectedSong = currentListSongs[currentSongIndex];
-                        var bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        var bitmapImage = new BitmapImage();
+                        if (System.IO.File.Exists(selectedSong.ImgSinger))
+                        {
+                            bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        }
+                        else
+                        {
+                            bitmapImage = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute));
+                        }
                         imgCurrentSinger.ImageSource = bitmapImage;
                         nameCurrentSong.Text = selectedSong.SongName;
                         nameCurrentSinger.Text = selectedSong.SingerName;
+                        currentSongplayingPath = selectedSong.FilePath;
                         mediaPlayer.Open(new Uri(selectedSong.FilePath));
                         // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                         sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
@@ -144,7 +153,15 @@ namespace WpfAppMusicPlayer
             if (songPopular != null)
             {
                 SongInfo song = GetSongBySongName(songPopular.Title);
-                var bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                var bitmapImage = new BitmapImage();
+                if (System.IO.File.Exists(song.ImgSinger))
+                {
+                    bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                }
+                else
+                {
+                    bitmapImage = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute));
+                }
                 imgCurrentSinger.ImageSource = bitmapImage;
                 nameCurrentSong.Text = song.SongName;
                 nameCurrentSinger.Text = song.SingerName;
@@ -389,11 +406,19 @@ namespace WpfAppMusicPlayer
                 var song = listSongs.ElementAt(i);
                 // Chuyển đổi đường dẫn hình ảnh sang kiểu ImageSource
                 BitmapImage bitmapImage = new BitmapImage();
+                var popularSong = new PopularSong();
+
                 bitmapImage.BeginInit();
-                bitmapImage.UriSource = new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute);
+                if (System.IO.File.Exists(song.ImgSinger))
+                {
+                    bitmapImage.UriSource = new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute);
+                }
+                else
+                {
+                    bitmapImage.UriSource = new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute);
+                }
                 bitmapImage.EndInit();
-                // Tạo một UserControl SongItem mới
-                var popularSong = new PopularSong
+                popularSong = new PopularSong
                 {
                     Title = song.SongName, // Lấy tiêu đề bài hát từ danh sách songs
                     Time = song.Duration.ToString(@"mm\:ss"), // Chuyển đổi thời lượng từ TimeSpan sang định dạng mm:ss

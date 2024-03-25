@@ -39,7 +39,7 @@ namespace WpfAppMusicPlayer.UserControls
         public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register
             ("IsActive", typeof(bool), typeof(PopularSong));
 
-        public ImageSource Image
+        public ImageSource? Image
         {
             get { return (ImageSource)GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }

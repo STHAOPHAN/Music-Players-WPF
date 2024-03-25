@@ -2989,19 +2989,19 @@
   },
   "packageFolders": {
     "C:\\Users\\Admin\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "D:\\Tools\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
+      "projectUniqueName": "D:\\Git\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
       "projectName": "WpfAppMusicPlayer",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
+      "projectPath": "D:\\Git\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\obj\\",
+      "outputPath": "D:\\Git\\Music-Players-WPF\\WpfAppMusicPlayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "D:\\Tools\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3095,7 +3095,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

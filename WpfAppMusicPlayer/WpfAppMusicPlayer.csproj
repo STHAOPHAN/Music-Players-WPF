@@ -12,6 +12,7 @@
     <None Remove="Images\Bray.jpg" />
     <None Remove="Images\Bích Phương.jpg" />
     <None Remove="Images\Micro.jpg" />
+    <None Remove="Images\microphone-8-xxl.png" />
     <None Remove="Images\SonTung.jpg" />
     <None Remove="Images\TrungQuanIdol.jpg" />
   </ItemGroup>
@@ -38,6 +39,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Micro.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\microphone-8-xxl.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\SonTung.jpg">

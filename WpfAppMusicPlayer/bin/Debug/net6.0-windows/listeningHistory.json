@@ -1,22 +1,6 @@
 [
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChiecHop-BichPhuong-7120378.mp3",
-    "SongName": "Chiếc Hộp",
-    "SingerName": "Bích Phương",
-    "Duration": "00:03:36.1200000",
-    "Album": "chiếc hộp (Single)",
-    "ImgSinger": "..\\..\\..\\Images\\Bích Phương.jpg"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChieuNayKhongCoMuaBay-TrungQuanIdol-3314229.mp3",
-    "SongName": "Chiều Nay Không Có Mưa Bay",
-    "SingerName": "Trung Quân Idol",
-    "Duration": "00:04:56.5920000",
-    "Album": "NhacCuaTui.Com",
-    "ImgSinger": "..\\..\\..\\Images\\Trung Quân Idol.jpg"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
+    "FilePath": "C:\\Users\\Admin\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
     "SongName": "Chúng Ta Của Tương Lai",
     "SingerName": "Sơn Tùng M-TP",
     "Duration": "00:04:09.9654375",
@@ -24,15 +8,15 @@
     "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
   },
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
-    "SongName": "Chúng Ta Của Tương Lai",
+    "FilePath": "C:\\Users\\Admin\\Music\\Chạy Ngay Đi-SonTungMTP.mp3",
+    "SongName": "Chạy Ngay Đi",
     "SingerName": "Sơn Tùng M-TP",
-    "Duration": "00:04:09.9654375",
-    "Album": "NhacCuaTui.com",
+    "Duration": "00:04:08.0628750",
+    "Album": "Chạy Ngay Đi (Single)",
     "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
   },
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\AmThamBenEm-SonTungMTP.mp3",
+    "FilePath": "C:\\Users\\Admin\\Music\\AmThamBenEm-SonTungMTP.mp3",
     "SongName": "Âm Thầm Bên Em",
     "SingerName": "Sơn Tùng (M-TP)",
     "Duration": "00:04:51.3266250",
@@ -40,11 +24,27 @@
     "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng (M-TP).jpg"
   },
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\BloodSweatTears-BTSBangtanBoys-4611195.mp3",
-    "SongName": "Blood Sweat & Tears - BTS (Bangtan Boys)",
-    "SingerName": "BTS (Bangtan Boys)",
-    "Duration": "00:03:36.2666250",
-    "Album": "NhacCuaTui.Com",
-    "ImgSinger": "..\\..\\..\\Images\\BTS (Bangtan Boys).jpg"
+    "FilePath": "C:\\Users\\Admin\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
+    "SongName": "Chúng Ta Của Tương Lai",
+    "SingerName": "Sơn Tùng M-TP",
+    "Duration": "00:04:09.9654375",
+    "Album": "NhacCuaTui.com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\Admin\\Music\\COCHACYEULADAY-SonTungMTP.mp3",
+    "SongName": "CÓ CHẮC YÊU LÀ ĐÂY",
+    "SingerName": "Sơn Tùng M-TP",
+    "Duration": "00:03:22.1668125",
+    "Album": "Có Chắc Yêu Là Đây (Single)",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\Admin\\Music\\ConMuaNgangQua-SonTungMTP.mp3",
+    "SongName": "Cơn Mưa Ngang Qua",
+    "SingerName": "Sơn Tùng M-TP",
+    "Duration": "00:04:48.1730625",
+    "Album": "NhacCuaTui.com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
   }
 ]

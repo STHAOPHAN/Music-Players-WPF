@@ -105,6 +105,10 @@ namespace WpfAppMusicPlayer
                         // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                         currentSongIndex = songIndex;
                         var selectedSong = currentListSongs[currentSongIndex];
+                        var bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        imgCurrentSinger.ImageSource = bitmapImage;
+                        nameCurrentSong.Text = selectedSong.SongName;
+                        nameCurrentSinger.Text = selectedSong.SingerName;
                         mediaPlayer.Open(new Uri(selectedSong.FilePath));
                         // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                         sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
@@ -138,7 +142,10 @@ namespace WpfAppMusicPlayer
             if (songPopular != null)
             {
                 SongInfo song = GetSongBySongName(songPopular.Title);
-
+                var bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                imgCurrentSinger.ImageSource = bitmapImage;
+                nameCurrentSong.Text = song.SongName;
+                nameCurrentSinger.Text = song.SingerName;
                 // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                 mediaPlayer.Open(new Uri(song.FilePath));
                 // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
@@ -640,7 +647,7 @@ namespace WpfAppMusicPlayer
 
         private void ViewSongsList(List<SongInfo> songs)
         {
-            formlistSinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             int i = 0;
             foreach (var song in songs)
             {
@@ -656,7 +663,7 @@ namespace WpfAppMusicPlayer
                 songItem.ContextMenu.Tag = songItem.SongInfo;
 
                 songItem.MouseDown += SongItem_MouseDown;
-                formlistSinger.Children.Add(songItem);
+                listSongBySinger.Children.Add(songItem);
 
             }
         }
@@ -722,7 +729,7 @@ namespace WpfAppMusicPlayer
         private void btnViewAlbums_Click(object sender, RoutedEventArgs e)
         {
             tbMainTitle.Text = "Albums";
-            formlistSinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             LoadSongsFromFolder();
             AddAlbumsList(allListSongs);
             int i = 0;
@@ -737,7 +744,7 @@ namespace WpfAppMusicPlayer
                 };
                 songItem.Tag = album.Songs;
                 songItem.MouseDown += AlbumItem_MouseDown;
-                formlistSinger.Children.Add(songItem);
+                listSongBySinger.Children.Add(songItem);
             }
         }
 

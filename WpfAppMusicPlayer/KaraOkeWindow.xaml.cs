@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Threading;
 
+
 namespace WpfAppMusicPlayer
 {
     /// <summary>

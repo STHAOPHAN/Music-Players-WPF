@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {}
   },
   "projects": {
-    "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {
+    "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
         "projectName": "WpfAppMusicPlayer",
-        "projectPath": "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Semester 7\\PRN211\\code\\MPChill\\Music-Players-WPF\\WpfAppMusicPlayer\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\WpfAppMusicPlayer.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\Music\\Music-Players-WPF\\WpfAppMusicPlayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

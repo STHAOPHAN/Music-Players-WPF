@@ -42,12 +42,12 @@
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource menuButton}">
+                    <!--<Button Style="{StaticResource menuButton}" >
                         <Grid>
                             <TextBlock Text="Playlists" Margin="0 0 0 2"/>
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
-                    </Button>
+                    </Button>-->
 
                     <Button Style="{StaticResource menuButton}">
                         <Grid>
@@ -69,12 +69,12 @@
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
+                    <!--<Button Style="{StaticResource menuButton}">
                         <Grid>
                             <TextBlock Text="Lyrics" Margin="0 0 0 2"/>
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
-                    </Button>
+                    </Button>-->
                     <Button Style="{StaticResource menuButton}" Click="btnKaraOke_Click">
                         <Grid>
                             <TextBlock Text="KaraOKe" Margin="0 0 0 2"/>
@@ -189,12 +189,12 @@
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Width="60" Height="60" Margin="30 0 0 0">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="/Images/Bray.jpg"/>
+                            <ImageBrush x:Name="imgCurrentSinger" ImageSource="/Images/Bray.jpg"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel VerticalAlignment="Center" Margin="20 0 30 0">
-                        <TextBlock Text="ME" Foreground="White" FontSize="22" FontWeight="Bold"/>
-                        <TextBlock Text="Taylor Swift" Foreground="#9ae5c3" FontSize="18" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="nameCurrentSong" Text="Tên bài hát" Foreground="White" FontSize="22" FontWeight="Bold" Width="200" MaxWidth="200"/>
+                        <TextBlock x:Name="nameCurrentSinger" Text="Taylor Swift" Foreground="#9ae5c3" FontSize="18" FontWeight="SemiBold"/>
                     </StackPanel>
 
                     <!-- Button -->

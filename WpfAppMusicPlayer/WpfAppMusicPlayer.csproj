@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <None Remove="Images\A mê.jpg" />
-    <None Remove="Images\BichPhuong.jpg" />
     <None Remove="Images\Bray.jpg" />
+    <None Remove="Images\Bích Phương.jpg" />
     <None Remove="Images\Micro.jpg" />
     <None Remove="Images\SonTung.jpg" />
     <None Remove="Images\TrungQuanIdol.jpg" />
@@ -31,10 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\A mê.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\BichPhuong.jpg">
+    <Resource Include="Images\Bích Phương.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Bray.jpg">
@@ -44,9 +41,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\SonTung.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\TrungQuanIdol.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

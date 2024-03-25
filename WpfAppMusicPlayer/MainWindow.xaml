@@ -75,6 +75,12 @@
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
                     </Button>
+                    <Button Style="{StaticResource menuButton}" Click="btnKaraOke_Click">
+                        <Grid>
+                            <TextBlock Text="KaraOKe" Margin="0 0 0 2"/>
+                            <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
+                        </Grid>
+                    </Button>
                     <Button x:Name="btnAIGenerated" Style="{StaticResource menuButton}" Click="btnAIGenerated_Click">
                         <Grid>
                             <TextBlock Text="AI Generated" Margin="0 0 0 2"/>

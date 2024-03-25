@@ -836,5 +836,11 @@ namespace WpfAppMusicPlayer
                 MessageBox.Show($"Error recognizing speech: {ex.Message}");
             }
         }
+
+        private void btnKaraOke_Click(object sender, RoutedEventArgs e)
+        {
+            KaraOkeWindow karaOkeWindow = new KaraOkeWindow();
+            karaOkeWindow.Show();
+        }
     }
 }

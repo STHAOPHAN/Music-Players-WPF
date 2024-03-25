@@ -24,11 +24,36 @@
                 <StackPanel Margin="0 30 0 0">
                     <!-- Ellipses -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="63 10 0 10">
-                        <Ellipse Fill="#ff6258" Width="10" Height="10"/>
-                        <Ellipse Fill="#ffbf2f" Width="10" Height="10" Margin="7 0"/>
-                        <Ellipse Fill="#2acb42" Width="10" Height="10"/>
-                    </StackPanel>
+                        <Button Width="10" Height="10" Click="Button_Click" Background="#ff6258">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Ellipse Fill="{TemplateBinding Background}" Width="10" Height="10"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
 
+                        <Button x:Name="Small" Width="10" Height="10" Margin="7 0" Click="ButtonSmall_Click" Background="#ffbf2f">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Ellipse Fill="{TemplateBinding Background}" Width="10" Height="10"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button Width="10" Height="10" Click="ButtonDesktop_Click" Background="#2acb42">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Ellipse Fill="{TemplateBinding Background}" Width="10" Height="10"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
                     <TextBlock Text="LIBRARY" Style="{StaticResource menuTitle}"/>
                     <Button x:Name="btnHome" Style="{StaticResource menuButton}" Background="#02be68" Foreground="White" Click="btnHome_Click">
                         <Grid>
@@ -49,12 +74,12 @@
                         </Grid>
                     </Button>-->
 
-                    <Button Style="{StaticResource menuButton}">
+                    <!--<Button Style="{StaticResource menuButton}" >
                         <Grid>
                             <TextBlock Text="Artists" Margin="0 0 0 2"/>
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
-                    </Button>
+                    </Button>-->
 
                     <Button x:Name="btnViewAlbums" Style="{StaticResource menuButton}" Click="btnViewAlbums_Click">
                         <Grid>

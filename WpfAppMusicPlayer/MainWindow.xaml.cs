@@ -561,6 +561,14 @@ namespace WpfAppMusicPlayer
 
         private async void btnAIGenerated_Click(object sender, RoutedEventArgs e)
         {
+            btnViewAlbums.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewAlbums.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewSongs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnHome.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnAIGenerated.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnAIGenerated.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "AI Genarated";
             formlistSinger.Children.Clear();
             if (currentSongplayingPath != null)
@@ -640,6 +648,15 @@ namespace WpfAppMusicPlayer
 
         private void btnViewSongs_Click(object sender, RoutedEventArgs e)
         {
+
+            btnAIGenerated.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnAIGenerated.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnHome.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewAlbums.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewAlbums.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnViewSongs.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "Songs";
             LoadSongsFromFolder();
             ViewSongsList(allListSongs);
@@ -722,12 +739,20 @@ namespace WpfAppMusicPlayer
         }
 
         private void PropertiesMenuItem_Click(object sender, RoutedEventArgs e)
-        {
+        {  
             // Xử lý sự kiện khi click vào Properties
         }
 
         private void btnViewAlbums_Click(object sender, RoutedEventArgs e)
         {
+            btnAIGenerated.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnAIGenerated.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnHome.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewSongs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewAlbums.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnViewAlbums.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "Albums";
             listSongBySinger.Children.Clear();
             LoadSongsFromFolder();
@@ -799,6 +824,14 @@ namespace WpfAppMusicPlayer
         }
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
+            btnAIGenerated.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnAIGenerated.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewAlbums.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewAlbums.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewSongs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnHome.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "Home";
             FillSongItems(allListSongs);
             LoadHistory();
@@ -927,6 +960,31 @@ namespace WpfAppMusicPlayer
         {
             KaraOkeWindow karaOkeWindow = new KaraOkeWindow();
             karaOkeWindow.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void ButtonSmall_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra trạng thái hiện tại của cửa sổ
+            if (WindowState == WindowState.Normal)
+            {
+                // Nếu cửa sổ đang ở trạng thái bình thường, chuyển sang trạng thái phóng to
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                // Nếu cửa sổ đang ở trạng thái phóng to, chuyển sang trạng thái bình thường
+                WindowState = WindowState.Normal;
+            }
+        }
+
+        private void ButtonDesktop_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }

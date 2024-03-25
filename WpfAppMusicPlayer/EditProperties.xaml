@@ -1,0 +1,29 @@
+﻿<Window x:Class="WpfAppMusicPlayer.EditProperties"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppMusicPlayer"
+        mc:Ignorable="d"
+        Title="Edit Properties" Height="360" Width="280"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Image x:Name="imgPicture" HorizontalAlignment="Left" Height="100" Margin="10,10,0,224" Width="100" Source="/NoImageAvailable.jpg"/>
+        <Button x:Name="btnChangeImg" Content="Select Image..." HorizontalAlignment="Left" Margin="162,45,0,0" VerticalAlignment="Top" Click="btnChangeImg_Click"/>
+        <Label Content="File Path" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Duration" HorizontalAlignment="Left" Margin="10,223,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Genres" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Album" HorizontalAlignment="Left" Margin="9,177,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Artist" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Title" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top" Width="65" Height="28"/>
+        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Margin="81,129,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189" BorderThickness="0"/>
+        <TextBox x:Name="txtFilePath" HorizontalAlignment="Left" Margin="81,254,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189" BorderThickness="0"/>
+        <TextBox x:Name="txtGenres" HorizontalAlignment="Left" Margin="81,202,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189" BorderThickness="0"/>
+        <TextBox x:Name="txtAlbum" HorizontalAlignment="Left" Margin="80,181,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189" BorderThickness="0"/>
+        <TextBox x:Name="txtArtist" HorizontalAlignment="Left" Margin="81,156,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189" BorderThickness="0"/>
+        <Label x:Name="txtDuration" Content="Duration" HorizontalAlignment="Left" Margin="81,223,0,0" VerticalAlignment="Top" Width="189"/>
+        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="162,78,0,0" VerticalAlignment="Top" Click="btnSave_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="202,78,0,0" VerticalAlignment="Top" Click="btnCancel_Click"/>
+    </Grid>
+</Window>

@@ -340,3 +340,7 @@ D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\WpfAppMusicPlayer.pdb
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\WpfAppMusicPlayer.genruntimeconfig.cache
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\ref\WpfAppMusicPlayer.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.g.cs
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.baml
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\EditProperties.g.cs
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\EditProperties.baml

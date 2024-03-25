@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 D:\Git\Music-Players-WPF\WpfAppMusicPlayer\App.xaml
-41563956972
+6221594276
 
-13-1923809620
+15830353624
 255-1133489519
-MainWindow.xaml;UserControls\Playlist.xaml;UserControls\PopularSong.xaml;UserControls\SongItem.xaml;
+EditProperties.xaml;MainWindow.xaml;Properties.xaml;UserControls\Playlist.xaml;UserControls\PopularSong.xaml;UserControls\SongItem.xaml;
 
-False
+True
 

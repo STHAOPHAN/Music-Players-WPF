@@ -1,6 +1,7 @@
 ﻿using Google.Cloud.Speech.V1;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,47 @@ namespace WpfAppMusicPlayer.Utils
             catch (Exception ex)
             {
                 Console.WriteLine($"Error recognizing speech from Cloud Storage: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<string> RecognizeSpeechFromAudioStreamAsync(Stream audioStream)
+        {
+            try
+            {
+                // Khởi tạo client của Google Cloud Speech-to-Text API
+                var speechClient = SpeechClient.Create();
+
+                // Khởi tạo recognition config cho tiếng Việt
+                var config = new RecognitionConfig
+                {
+                    Encoding = RecognitionConfig.Types.AudioEncoding.Linear16,
+                    SampleRateHertz = 16000,
+                    LanguageCode = "vi-VN",
+                    EnableWordTimeOffsets = true,
+                    EnableAutomaticPunctuation = true
+                };
+
+                // Khởi tạo recognition audio từ stream audio
+                var audio = RecognitionAudio.FromStream(audioStream);
+
+                // Thực hiện nhận dạng giọng nói từ audio bằng Google Cloud Speech-to-Text API
+                var response = await speechClient.RecognizeAsync(config, audio);
+
+                // Lấy kết quả nhận dạng và trả về văn bản
+                string transcript = "";
+                foreach (var result in response.Results)
+                {
+                    foreach (var alternative in result.Alternatives)
+                    {
+                        transcript += $"{alternative.Transcript}\n";
+                    }
+                }
+                return transcript;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error recognizing speech: {ex.Message}");
                 return null;
             }
         }

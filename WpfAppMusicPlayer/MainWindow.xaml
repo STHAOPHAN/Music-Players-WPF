@@ -87,7 +87,18 @@
             <StackPanel Grid.Column="1" Background="White" Margin="40 10 10 0">
                 <!-- Thêm TextBox và Button tìm kiếm ở đây -->
                 <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
-                    <TextBox x:Name="txtSearchQuery" Width="256" Height="30" VerticalContentAlignment="Center" Padding="5"/>
+                    <TextBox x:Name="txtSearchQuery" Width="214" Height="30" VerticalContentAlignment="Center" Padding="5"/>
+                    <Button Click="BtnStart_Click" Width="30" Margin="10 0 0 0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Ellipse Width="30" Height="30">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="/Images/Micro.jpg"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                     <Button x:Name="btnSearch" Content="Tìm kiếm" Width="100" Height="30" Margin="10 0 0 0" Click="btnSearch_Click"/>
                 </StackPanel>
                 <TextBlock x:Name="tbMainTitle" Text="Home" Style="{StaticResource titleText}"/>

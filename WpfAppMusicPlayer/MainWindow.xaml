@@ -42,12 +42,12 @@
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource menuButton}">
+                    <!--<Button Style="{StaticResource menuButton}" >
                         <Grid>
                             <TextBlock Text="Playlists" Margin="0 0 0 2"/>
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
-                    </Button>
+                    </Button>-->
 
                     <Button Style="{StaticResource menuButton}">
                         <Grid>
@@ -69,9 +69,15 @@
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
                     </Button>
-                    <Button Style="{StaticResource menuButton}">
+                    <!--<Button Style="{StaticResource menuButton}">
                         <Grid>
                             <TextBlock Text="Lyrics" Margin="0 0 0 2"/>
+                            <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
+                        </Grid>
+                    </Button>-->
+                    <Button Style="{StaticResource menuButton}" Click="btnKaraOke_Click">
+                        <Grid>
+                            <TextBlock Text="KaraOKe" Margin="0 0 0 2"/>
                             <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
                         </Grid>
                     </Button>
@@ -87,7 +93,18 @@
             <StackPanel Grid.Column="1" Background="White" Margin="40 10 10 0">
                 <!-- Thêm TextBox và Button tìm kiếm ở đây -->
                 <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
-                    <TextBox x:Name="txtSearchQuery" Width="256" Height="30" VerticalContentAlignment="Center" Padding="5"/>
+                    <TextBox x:Name="txtSearchQuery" Width="214" Height="30" VerticalContentAlignment="Center" Padding="5"/>
+                    <Button Click="BtnStart_Click" Width="30" Margin="10 0 0 0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Ellipse Width="30" Height="30">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="/Images/Micro.jpg"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                     <Button x:Name="btnSearch" Content="Tìm kiếm" Width="100" Height="30" Margin="10 0 0 0" Click="btnSearch_Click"/>
                 </StackPanel>
                 <TextBlock x:Name="tbMainTitle" Text="Home" Style="{StaticResource titleText}"/>
@@ -110,25 +127,38 @@
                         </Grid.RowDefinitions>
                         <Border Opacity="0.07" CornerRadius="20" Grid.RowSpan="2">
                             <Border.Background>
-                                <ImageBrush ImageSource="/Images/SonTung.jpg"/>
+                                <ImageBrush x:Name="imgBackgroud" ImageSource="/Images/SonTung.jpg"/>
                             </Border.Background>
                         </Border>
 
                         <!-- Music List -->
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" Width="365" Height="450">
 
-                            <StackPanel x:Name="listDailySinger" Margin="30">
-                                <TextBlock Text="Daily Singer" Foreground="White" FontSize="26" FontWeight="Bold"/>
-                                <TextBlock Text="Sơn Tùng" Foreground="#c8e6de" FontSize="18" FontWeight="SemiBold" Margin="0 10 0 20"/>
+                            <StackPanel x:Name="formlistSinger" Margin="30">
+                                <StackPanel x:Name="searchSinger">
+                                    <TextBox x:Name="txtSearchSinger" Foreground="White" FontSize="20" FontWeight="Bold" Width="300" HorizontalAlignment="Center" TextChanged="txtSearchSinger_TextChanged" Background="#FF27A371" TextAlignment="Center"/>
+                                    <ListBox x:Name="lstSuggestions" Width="300" MaxHeight="200" ItemsSource="{Binding SuggestedSingers}" MouseDoubleClick="lstSuggestions_MouseDoubleClick" HorizontalAlignment="Center" Background="#FF33AE7E">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" FontSize="20" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
 
-                                <uc:SongItem Number="01" Title="Chúng ta của tương lai" Time="03:56" MouseDown="SongItem_MouseDown"/>
-                                <uc:SongItem Number="02" Title="Em Của Ngày Hôm Qua" Time="03:39" MouseDown="SongItem_MouseDown"/>
-                                <uc:SongItem Number="03" Title="Lạc Trôi" Time="02:59" MouseDown="SongItem_MouseDown"/>
-                                <uc:SongItem Number="04" Title="Nơi Này Có Anh" Time="03:33" IsActive="True" MouseDown="SongItem_MouseDown"/>
-                                <uc:SongItem Number="05" Title="Muộn Rồi Mà Sao Còn" Time="05:52" MouseDown="SongItem_MouseDown"/>
-                                <uc:SongItem Number="06" Title="Chúng Ta Không Thuộc Về Nhau" Time="04:47" MouseDown="SongItem_MouseDown"/>
-                                <uc:SongItem Number="07" Title="Hãy Trao Cho Anh" Time="06:20" MouseDown="SongItem_MouseDown"/>
+                                <StackPanel x:Name="listSongBySinger">
+                                    <TextBlock Text="Sơn Tùng" Foreground="White" FontSize="26" FontWeight="Bold"/>
 
+                                    <uc:SongItem Number="01" Title="Chúng ta của tương lai" Time="03:56" MouseDown="SongItem_MouseDown"/>
+                                    <uc:SongItem Number="02" Title="Em Của Ngày Hôm Qua" Time="03:39" MouseDown="SongItem_MouseDown"/>
+                                    <uc:SongItem Number="03" Title="Lạc Trôi" Time="02:59" MouseDown="SongItem_MouseDown"/>
+                                    <uc:SongItem Number="04" Title="Nơi Này Có Anh" Time="03:33" IsActive="True" MouseDown="SongItem_MouseDown"/>
+                                    <uc:SongItem Number="05" Title="Muộn Rồi Mà Sao Còn" Time="05:52" MouseDown="SongItem_MouseDown"/>
+                                    <uc:SongItem Number="06" Title="Chúng Ta Không Thuộc Về Nhau" Time="04:47" MouseDown="SongItem_MouseDown"/>
+                                    <uc:SongItem Number="07" Title="Hãy Trao Cho Anh" Time="06:20" MouseDown="SongItem_MouseDown"/>
+
+                                </StackPanel>
+                                
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
@@ -142,18 +172,13 @@
 
                     <!-- Populars -->
                     <StackPanel x:Name="listPopulars">
-                        <uc:PopularSong Title="My House" Time="03:13" Image="/Images/A mê.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                        <uc:PopularSong Title="My House" Time="03:13" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
                         <uc:PopularSong Title="Blank Space" Time="04:02" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick" IsActive="True"/>
-                        <uc:PopularSong Title="Love Story" Time="05:04" Image="/Images/BichPhuong.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
-                        <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/TrungQuanIdol.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
-                    </StackPanel>
+                        <uc:PopularSong Title="Love Story" Time="05:04" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                        <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                        <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                        <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
 
-                    <TextBlock Text="Playlists" Style="{StaticResource titleText}" Margin="0 30 0 20" FontSize="24"/>
-
-                    <!-- Playlists -->
-                    <StackPanel Orientation="Horizontal">
-                        <uc:Playlist Title="Glory" Desc="Kutless" Image="/Images/Bray.jpg"/>
-                        <uc:Playlist Title="Miracle" Desc="Fiasder" Image="/Images/Bray.jpg" Margin="40 0 0 0"/>
                     </StackPanel>
 
                 </StackPanel>
@@ -164,12 +189,12 @@
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Width="60" Height="60" Margin="30 0 0 0">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="/Images/Bray.jpg"/>
+                            <ImageBrush x:Name="imgCurrentSinger" ImageSource="/Images/Bray.jpg"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel VerticalAlignment="Center" Margin="20 0 30 0">
-                        <TextBlock Text="ME" Foreground="White" FontSize="22" FontWeight="Bold"/>
-                        <TextBlock Text="Taylor Swift" Foreground="#9ae5c3" FontSize="18" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="nameCurrentSong" Text="Tên bài hát" Foreground="White" FontSize="22" FontWeight="Bold" Width="200" MaxWidth="200"/>
+                        <TextBlock x:Name="nameCurrentSinger" Text="Taylor Swift" Foreground="#9ae5c3" FontSize="18" FontWeight="SemiBold"/>
                     </StackPanel>
 
                     <!-- Button -->

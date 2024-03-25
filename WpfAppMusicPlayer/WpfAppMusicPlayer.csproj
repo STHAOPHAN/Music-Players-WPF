@@ -9,8 +9,10 @@
 
   <ItemGroup>
     <None Remove="Images\A mê.jpg" />
-    <None Remove="Images\BichPhuong.jpg" />
     <None Remove="Images\Bray.jpg" />
+    <None Remove="Images\Bích Phương.jpg" />
+    <None Remove="Images\Micro.jpg" />
+    <None Remove="Images\microphone-8-xxl.png" />
     <None Remove="Images\SonTung.jpg" />
     <None Remove="Images\TrungQuanIdol.jpg" />
   </ItemGroup>
@@ -22,6 +24,7 @@
     <PackageReference Include="Google.Cloud.Storage.V1" Version="4.9.0" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NReco.VideoConverter" Version="1.2.1" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
@@ -29,19 +32,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\A mê.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\BichPhuong.jpg">
+    <Resource Include="Images\Bích Phương.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Bray.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\SonTung.jpg">
+    <Resource Include="Images\Micro.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\TrungQuanIdol.jpg">
+    <Resource Include="Images\microphone-8-xxl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\SonTung.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

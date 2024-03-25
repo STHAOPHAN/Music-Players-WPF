@@ -23,6 +23,9 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Security.Policy;
 using TagLib.Flac;
+using System.Reflection;
+using System.Globalization;
+using NAudio.Wave;
 
 namespace WpfAppMusicPlayer
 {
@@ -36,6 +39,8 @@ namespace WpfAppMusicPlayer
         private List<SongInfo> currentListSongs = new List<SongInfo>(); // List bài đang được phát
         private Queue<SongInfo> listeningHistory = new Queue<SongInfo>();
         private List<Album> albums = new List<Album>();
+        private List<string> listSinger = new List<string>();
+        private List<string> _suggestedSingers = new List<string>();
 
         private int currentSongIndex = -1;
         private bool isPlaying = false; // Biến để theo dõi trạng thái phát nhạc (đang phát hay tạm dừng)
@@ -45,14 +50,26 @@ namespace WpfAppMusicPlayer
         {
             InitializeComponent();
             LoadSongsFromFolder();
+            GetAllSinger();
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             // Đặt giá trị ban đầu cho TextBlock là "00:00"
             timeMusicPlay.Text = "00:00";
-
-            currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
-            FillSongItems(currentListSongs);
+            FillSongItems(allListSongs);
             LoadHistory();
             FillPopular(listeningHistory);
+        }
+
+        private void GetAllSinger()
+        {
+            HashSet<string> uniqueSingers = new HashSet<string>(); // HashSet để lưu trữ các giá trị duy nhất
+            foreach (var song in allListSongs)
+            {
+                if (!uniqueSingers.Contains(song.SingerName)) // Kiểm tra xem ca sĩ đã tồn tại trong HashSet chưa
+                {
+                    uniqueSingers.Add(song.SingerName); // Nếu chưa tồn tại, thêm vào HashSet
+                    listSinger.Add(song.SingerName); // Thêm vào danh sách ca sĩ
+                }
+            }
         }
 
         private void SongItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -90,6 +107,10 @@ namespace WpfAppMusicPlayer
                         // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                         currentSongIndex = songIndex;
                         var selectedSong = currentListSongs[currentSongIndex];
+                        var bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        imgCurrentSinger.ImageSource = bitmapImage;
+                        nameCurrentSong.Text = selectedSong.SongName;
+                        nameCurrentSinger.Text = selectedSong.SingerName;
                         mediaPlayer.Open(new Uri(selectedSong.FilePath));
                         // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                         sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
@@ -123,7 +144,10 @@ namespace WpfAppMusicPlayer
             if (songPopular != null)
             {
                 SongInfo song = GetSongBySongName(songPopular.Title);
-
+                var bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                imgCurrentSinger.ImageSource = bitmapImage;
+                nameCurrentSong.Text = song.SongName;
+                nameCurrentSinger.Text = song.SingerName;
                 // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                 mediaPlayer.Open(new Uri(song.FilePath));
                 // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
@@ -299,36 +323,39 @@ namespace WpfAppMusicPlayer
                 }
             }
 
-            // Trả về danh sách top 7 bài hát của ca sĩ
             return topSongs;
         }
 
         private void FillSongItems(List<SongInfo> listSongs)
         {
             // Xóa tất cả các phần tử trong StackPanel trước khi điền lại
-            listDailySinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             MediaPlayer mediaLoad = new MediaPlayer();
 
-            // Thêm TextBlock "Daily Singer"
-            TextBlock textBlock1 = new TextBlock
+            TextBlock textBlock1;
+            if (listSongs.Count == allListSongs.Count)
             {
-                Text = "Daily Singer",
-                Foreground = Brushes.White,
-                FontSize = 26,
-                FontWeight = FontWeights.Bold
-            };
-            listDailySinger.Children.Add(textBlock1);
+                textBlock1 = new TextBlock
+                {
+                    Text = "All Songs",
+                    Foreground = Brushes.White,
+                    FontSize = 26,
+                    FontWeight = FontWeights.Bold
+                };
+                listSongBySinger.Children.Add(textBlock1);
+            }
+            else
+            {
+                textBlock1 = new TextBlock
+                {
+                    Text = listSongs[0].SingerName,
+                    Foreground = Brushes.White,
+                    FontSize = 26,
+                    FontWeight = FontWeights.Bold
+                };
+                listSongBySinger.Children.Add(textBlock1);
+            }
 
-            // Thêm TextBlock "Sơn Tùng"
-            TextBlock textBlock2 = new TextBlock
-            {
-                Text = listSongs[0].SingerName,
-                Foreground = new SolidColorBrush(Color.FromRgb(200, 230, 222)),
-                FontSize = 18,
-                FontWeight = FontWeights.SemiBold,
-                Margin = new Thickness(0, 10, 0, 20)
-            };
-            listDailySinger.Children.Add(textBlock2);
             // Tiến hành điền các SongItem vào StackPanel
             int i = 0;
             foreach (var song in listSongs)
@@ -347,19 +374,17 @@ namespace WpfAppMusicPlayer
                 // Thêm UserControl SongItem vào StackPanel
                 songItem.ContextMenu = GetSongItemContextMenu(songItem.SongInfo);
                 songItem.ContextMenu.Tag = songItem.SongInfo;
-                listDailySinger.Children.Add(songItem);
-                if (i > 6)
-                {
-                    break;
-                }
+                listSongBySinger.Children.Add(songItem);
+
             }
+            currentListSongs = listSongs;
         }
 
         private void FillPopular(Queue<SongInfo> listSongs)
         {
             // Xóa tất cả các phần tử trong StackPanel trước khi điền lại
             listPopulars.Children.Clear();
-            for (int i = listSongs.Count - 1; i >= listSongs.Count - 4; i--)
+            for (int i = listSongs.Count - 1; i >= listSongs.Count - 6; i--)
             {
                 var song = listSongs.ElementAt(i);
                 // Chuyển đổi đường dẫn hình ảnh sang kiểu ImageSource
@@ -423,7 +448,7 @@ namespace WpfAppMusicPlayer
         public void AddSongToHistory(SongInfo song)
         {
             listeningHistory.Enqueue(song); // Thêm bài hát vào cuối hàng đợi
-            while (listeningHistory.Count > 4)
+            while (listeningHistory.Count > 6)
             {
                 listeningHistory.Dequeue(); // Nếu vượt quá số lượng tối đa, loại bỏ bài hát cũ nhất
             }
@@ -462,7 +487,7 @@ namespace WpfAppMusicPlayer
             YoutubeService youtubeService = new YoutubeService();
             SearchListResponse result = await youtubeService.SearchOnYouTube(searchQuery);
 
-            listDailySinger.Children.Clear();
+            formlistSinger.Children.Clear();
             foreach (var searchResult in result.Items)
             {
                 if (searchResult.Id.Kind == "youtube#video")
@@ -503,8 +528,8 @@ namespace WpfAppMusicPlayer
                     Grid.SetColumn(downloadButton, 1);
                     grid.Children.Add(downloadButton);
 
-                    listDailySinger.Children.Add(titleBlock);
-                    listDailySinger.Children.Add(grid);
+                    formlistSinger.Children.Add(titleBlock);
+                    formlistSinger.Children.Add(grid);
                 }
             }
         }
@@ -548,7 +573,7 @@ namespace WpfAppMusicPlayer
         private async void btnAIGenerated_Click(object sender, RoutedEventArgs e)
         {
             tbMainTitle.Text = "AI Genarated";
-            listDailySinger.Children.Clear();
+            formlistSinger.Children.Clear();
             if (currentSongplayingPath != null)
             {
                 var cloudStorageHelper = new CloudStorageHelper();
@@ -573,7 +598,7 @@ namespace WpfAppMusicPlayer
                             TextWrapping = TextWrapping.Wrap
                         };
 
-                        listDailySinger.Children.Add(textBlock);
+                        formlistSinger.Children.Add(textBlock);
                     }
                 }
                 /*                var requestBody = new
@@ -633,7 +658,7 @@ namespace WpfAppMusicPlayer
 
         private void ViewSongsList(List<SongInfo> songs)
         {
-            listDailySinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             int i = 0;
             foreach (var song in songs)
             {
@@ -649,8 +674,8 @@ namespace WpfAppMusicPlayer
                 songItem.ContextMenu.Tag = songItem.SongInfo;
 
                 songItem.MouseDown += SongItem_MouseDown;
+                listSongBySinger.Children.Add(songItem);
 
-                listDailySinger.Children.Add(songItem);
             }
         }
 
@@ -777,7 +802,7 @@ namespace WpfAppMusicPlayer
         private void btnViewAlbums_Click(object sender, RoutedEventArgs e)
         {
             tbMainTitle.Text = "Albums";
-            listDailySinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             LoadSongsFromFolder();
             AddAlbumsList(allListSongs);
             int i = 0;
@@ -792,7 +817,7 @@ namespace WpfAppMusicPlayer
                 };
                 songItem.Tag = album.Songs;
                 songItem.MouseDown += AlbumItem_MouseDown;
-                listDailySinger.Children.Add(songItem);
+                listSongBySinger.Children.Add(songItem);
             }
         }
 
@@ -848,11 +873,133 @@ namespace WpfAppMusicPlayer
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
             tbMainTitle.Text = "Home";
-            LoadSongsFromFolder();
-            currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
-            FillSongItems(currentListSongs);
+            FillSongItems(allListSongs);
+            LoadHistory();
+            FillPopular(listeningHistory);
+        }
+
+        // Hàm loại bỏ dấu tiếng Việt
+        private string RemoveDiacritics(string text)
+        {
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                UnicodeCategory category = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (c == 'đ' || c == 'Đ')
+                {
+                    stringBuilder.Append('d');
+                }
+                if (category != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        private void txtSearchSinger_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            lstSuggestions.Visibility = Visibility.Visible;
+            string searchText = txtSearchSinger.Text.ToLower();
+            List<string> newSuggestions = new List<string>(); // Tạo danh sách mới để lưu các gợi ý mới
+
+            // Lặp qua danh sách ca sĩ và thêm các gợi ý phù hợp vào danh sách mới
+            foreach (string singer in listSinger)
+            {
+                if (RemoveDiacritics(singer.ToLower()).Contains(searchText))
+                {
+                    newSuggestions.Add(singer);
+                }
+            }
+
+            // Gán danh sách mới cho danh sách gợi ý
+            lstSuggestions.ItemsSource = newSuggestions;
+
+            if (_suggestedSingers.Count == 0 && string.IsNullOrEmpty(searchText))
+            {
+                lstSuggestions.Visibility = Visibility.Collapsed;
+                FillSongItems(allListSongs);
+            }
+            else
+            {
+                lstSuggestions.Visibility = Visibility.Visible;
+            }
         }
 
 
+        private void lstSuggestions_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string selectedSinger = (string)lstSuggestions.SelectedItem;
+            if (selectedSinger != null)
+            {
+                // Xử lý khi chọn ca sĩ, ví dụ: hiển thị danh sách bài hát của ca sĩ đó
+                FillSongItems(GetSongsBySinger(selectedSinger));
+                lstSuggestions.Visibility = Visibility.Collapsed;
+			}
+		}
+		
+        private async void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                txtSearchQuery.Text = "Listening Now.....";
+
+                // Sử dụng NAudio để ghi âm từ microphone và lưu vào một MemoryStream
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    using (WaveInEvent waveIn = new WaveInEvent())
+                    {
+                        // Cấu hình WaveInEvent để ghi âm từ default audio device
+                        waveIn.DeviceNumber = 0;
+                        waveIn.WaveFormat = new WaveFormat(16000, 1); // Sample rate 16000Hz, 16-bit, mono
+
+                        // Xử lý sự kiện khi có dữ liệu âm thanh ghi từ microphone
+                        waveIn.DataAvailable += (s, args) =>
+                        {
+                            stream.Write(args.Buffer, 0, args.BytesRecorded);
+                        };
+
+                        // Bắt đầu ghi âm
+                        waveIn.StartRecording();
+
+                        // Chờ một khoảng thời gian (ví dụ: 5 giây) sau đó dừng ghi âm
+                        await Task.Delay(TimeSpan.FromSeconds(5)); // Đợi 5 giây
+                        waveIn.StopRecording();
+                    }
+
+                    // Đặt con trỏ về đầu của MemoryStream để đọc dữ liệu âm thanh
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    // Khởi tạo một instance của SpeechToTextHelper
+                    var speechToTextHelper = new SpeechToTextHelper();
+
+                    // Gọi phương thức RecognizeSpeechFromAudioStreamAsync để nhận dạng giọng nói từ stream audio
+                    string transcript = await speechToTextHelper.RecognizeSpeechFromAudioStreamAsync(stream);
+
+                    // Hiển thị kết quả nhận dạng trong textBox1
+                    if (!string.IsNullOrEmpty(transcript))
+                    {
+                        txtSearchQuery.Text = transcript;
+                    }
+                    else
+                    {
+                        txtSearchQuery.Text = "No recognition result.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error recognizing speech: {ex.Message}");
+            }
+        }
+
+        private void btnKaraOke_Click(object sender, RoutedEventArgs e)
+        {
+            KaraOkeWindow karaOkeWindow = new KaraOkeWindow();
+            karaOkeWindow.Show();
+        }
     }
 }

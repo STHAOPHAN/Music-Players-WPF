@@ -340,6 +340,10 @@ D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\WpfAppMusicPlayer.pdb
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\WpfAppMusicPlayer.genruntimeconfig.cache
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\ref\WpfAppMusicPlayer.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.g.cs
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.baml
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\EditProperties.g.cs
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\EditProperties.baml
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\WpfAppMusicPlayer.exe
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\Images\Icons\Album.png
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\WpfAppMusicPlayer.deps.json
@@ -450,3 +454,12 @@ D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\
 D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.WinMM.dll
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\KaraOkeWindow.baml
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\KaraOkeWindow.g.cs
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Asio.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Core.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Midi.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Wasapi.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.WinForms.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.WinMM.dll
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\KaraOkeWindow.baml
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\KaraOkeWindow.g.cs

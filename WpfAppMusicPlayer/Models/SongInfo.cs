@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagLib;
 
 namespace WpfAppMusicPlayer.Models
 {
@@ -14,5 +16,8 @@ namespace WpfAppMusicPlayer.Models
         public TimeSpan Duration { get; set; }
         public string? Album { get; set; }
         public string? ImgSinger { get; set; }
+        public string? Genres { get; set; }
+        [JsonIgnore]
+        public IPicture? Picture { get; set; }
     }
 }

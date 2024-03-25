@@ -21,6 +21,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using System.Security.Policy;
+using TagLib.Flac;
 using System.Reflection;
 using System.Globalization;
 using NAudio.Wave;
@@ -105,10 +107,19 @@ namespace WpfAppMusicPlayer
                         // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                         currentSongIndex = songIndex;
                         var selectedSong = currentListSongs[currentSongIndex];
-                        var bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        var bitmapImage = new BitmapImage();
+                        if (System.IO.File.Exists(selectedSong.ImgSinger))
+                        {
+                            bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        }
+                        else
+                        {
+                            bitmapImage = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute));
+                        }
                         imgCurrentSinger.ImageSource = bitmapImage;
                         nameCurrentSong.Text = selectedSong.SongName;
                         nameCurrentSinger.Text = selectedSong.SingerName;
+                        currentSongplayingPath = selectedSong.FilePath;
                         mediaPlayer.Open(new Uri(selectedSong.FilePath));
                         // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                         sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
@@ -142,7 +153,15 @@ namespace WpfAppMusicPlayer
             if (songPopular != null)
             {
                 SongInfo song = GetSongBySongName(songPopular.Title);
-                var bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                var bitmapImage = new BitmapImage();
+                if (System.IO.File.Exists(song.ImgSinger))
+                {
+                    bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                }
+                else
+                {
+                    bitmapImage = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute));
+                }
                 imgCurrentSinger.ImageSource = bitmapImage;
                 nameCurrentSong.Text = song.SongName;
                 nameCurrentSinger.Text = song.SingerName;
@@ -192,14 +211,22 @@ namespace WpfAppMusicPlayer
             foreach (string filePath in Directory.GetFiles(musicFolderPath, "*.mp3"))
             {
                 TagLib.File file = TagLib.File.Create(filePath);
-                // Lấy tiêu đề bài hát
-                string songName = file.Tag.Title;
-                // Lấy tên ca sĩ
-                string singerName = file.Tag.Artists[0];
-                string album = file.Tag.Album;
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                string? songName = file.Tag.Title;
+                string? singerName = "";
+                if (file.Tag.Artists.Length > 0)
+                {
+                    singerName = file.Tag.Artists[0];
+                }
+                string? album = file.Tag.Album;
+                string? fileName = Path.GetFileNameWithoutExtension(filePath);
+                string? genres = string.Join(", ", file.Tag.Genres);
                 TimeSpan durationSong = file.Properties.Duration;
-                string imgSinger = "..\\..\\..\\Images\\" + singerName + ".jpg";
+                string? imgSinger = "..\\..\\..\\Images\\" + singerName + ".jpg";
+                IPicture? picture = null;
+                if (file.Tag.Pictures.Length > 0)
+                {
+                    picture = file.Tag.Pictures[0];
+                }
 
                 // Sử dụng totalSeconds để khởi tạo Duration cho SongInfo
                 SongInfo songInfo = new SongInfo
@@ -209,7 +236,9 @@ namespace WpfAppMusicPlayer
                     SingerName = singerName,
                     Duration = durationSong,
                     Album = album,
-                    ImgSinger = imgSinger
+                    ImgSinger = imgSinger,
+                    Genres = genres,
+                    Picture = picture
                 };
 
                 allListSongs.Add(songInfo);
@@ -360,8 +389,7 @@ namespace WpfAppMusicPlayer
                 // Gán sự kiện MouseDown cho UserControl SongItem
                 songItem.MouseDown += SongItem_MouseDown;
                 // Thêm UserControl SongItem vào StackPanel
-
-                songItem.ContextMenu = GetSongItemContextMenu();
+                songItem.ContextMenu = GetSongItemContextMenu(songItem.SongInfo);
                 songItem.ContextMenu.Tag = songItem.SongInfo;
                 listSongBySinger.Children.Add(songItem);
 
@@ -378,11 +406,19 @@ namespace WpfAppMusicPlayer
                 var song = listSongs.ElementAt(i);
                 // Chuyển đổi đường dẫn hình ảnh sang kiểu ImageSource
                 BitmapImage bitmapImage = new BitmapImage();
+                var popularSong = new PopularSong();
+
                 bitmapImage.BeginInit();
-                bitmapImage.UriSource = new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute);
+                if (System.IO.File.Exists(song.ImgSinger))
+                {
+                    bitmapImage.UriSource = new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute);
+                }
+                else
+                {
+                    bitmapImage.UriSource = new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute);
+                }
                 bitmapImage.EndInit();
-                // Tạo một UserControl SongItem mới
-                var popularSong = new PopularSong
+                popularSong = new PopularSong
                 {
                     Title = song.SongName, // Lấy tiêu đề bài hát từ danh sách songs
                     Time = song.Duration.ToString(@"mm\:ss"), // Chuyển đổi thời lượng từ TimeSpan sang định dạng mm:ss
@@ -659,7 +695,7 @@ namespace WpfAppMusicPlayer
                     Title = song.SongName,
                     Time = song.Duration.ToString(@"mm\:ss")
                 };
-                songItem.ContextMenu = GetSongItemContextMenu();
+                songItem.ContextMenu = GetSongItemContextMenu(songItem.SongInfo);
                 songItem.ContextMenu.Tag = songItem.SongInfo;
 
                 songItem.MouseDown += SongItem_MouseDown;
@@ -668,7 +704,7 @@ namespace WpfAppMusicPlayer
             }
         }
 
-        private ContextMenu GetSongItemContextMenu()
+        private ContextMenu GetSongItemContextMenu(SongInfo songInfo)
         {
             ContextMenu contextMenu = new ContextMenu();
 
@@ -683,9 +719,9 @@ namespace WpfAppMusicPlayer
             {
                 MenuItem albumItem = new MenuItem() { Header = album.Name, Icon = new Image { Source = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/Icons/Album.png", UriKind.RelativeOrAbsolute)) } };
                 albumItem.Click += AddToAlbum_Click;
+                albumItem.Tag = songInfo;
                 addToAlbumMenuItem.Items.Add(albumItem);
             }
-
             editMenuItem.Click += EditMenuItem_Click;
             openFolderMenuItem.Click += OpenFolderMenuItem_Click;     
             propertiesMenuItem.Click += PropertiesMenuItem_Click;
@@ -697,15 +733,32 @@ namespace WpfAppMusicPlayer
 
             return contextMenu;
         }
-
         private void AddToAlbum_Click(object sender, RoutedEventArgs e)
         {
-            // Xử lý sự kiện khi click vào Edit
+            MenuItem menuItem = (MenuItem)sender;
+            SongInfo songInfo = (SongInfo)menuItem.Tag;
+
+            TagLib.File file = TagLib.File.Create(songInfo.FilePath);
+            if (file != null )
+            {
+                file.Tag.Album = menuItem.Header.ToString();
+                file.Save();
+            }
         }
 
         private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            // Xử lý sự kiện khi click vào Edit
+            MenuItem menuItem = (MenuItem)sender;
+
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            SongInfo songInfo = (SongInfo)contextMenu.Tag;
+
+            if (songInfo != null)
+            {
+                var editWindow = new EditProperties(songInfo);
+                editWindow.ShowDialog();
+            }
         }
 
         private void OpenFolderMenuItem_Click(object sender, RoutedEventArgs e)
@@ -723,7 +776,52 @@ namespace WpfAppMusicPlayer
 
         private void PropertiesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            // Xử lý sự kiện khi click vào Properties
+            MenuItem menuItem = sender as MenuItem;
+
+            ContextMenu contextMenu = menuItem.Parent as ContextMenu;
+
+            SongInfo songInfo = contextMenu.Tag as SongInfo;
+
+            if (songInfo != null)
+            {
+                try
+                {
+
+                    var file = TagLib.File.Create(songInfo.FilePath);
+                    string message = $"Title: {songInfo.SongName}\n" +
+                        $"Artist: {songInfo.SingerName}\n" +
+                        $"Album: {songInfo.Album}\n" +
+                        $"Genres: {songInfo.Genres}\n" +
+                        $"Duration: {songInfo.Duration}\n" +
+                        $"File Path: {songInfo.FilePath}";
+                    // Lấy hình ảnh đầu tiên từ danh sách hình ảnh nhúng trong file nhạc (nếu có)
+                    if (songInfo.Picture != null)
+                    {
+                        var picture = file.Tag.Pictures[0];
+                        MemoryStream stream = new MemoryStream(picture.Data.Data);
+                        BitmapImage imageSource = new BitmapImage();
+                        imageSource.BeginInit();
+                        imageSource.StreamSource = stream;
+                        imageSource.EndInit();
+                        ShowPropertiesForm(imageSource, message);
+
+                    } else
+                    {
+                        ShowPropertiesForm(null, message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý nếu có lỗi xảy ra
+                    MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void ShowPropertiesForm(BitmapImage? image, string message)
+        {
+            var window = new Properties(image, message);
+            window.ShowDialog();
         }
 
         private void btnViewAlbums_Click(object sender, RoutedEventArgs e)

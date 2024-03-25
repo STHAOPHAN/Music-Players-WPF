@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\
 WpfAppMusicPlayer
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\App.xaml
-5688158666
+D:\Git\Music-Players-WPF\WpfAppMusicPlayer\App.xaml
+7-654204030
 
-141468812986
-269-1753544182
-KaraOkeWindow.xaml;MainWindow.xaml;UserControls\Playlist.xaml;UserControls\PopularSong.xaml;UserControls\SongItem.xaml;
+16-71991066
+269802042459
+EditProperties.xaml;KaraOkeWindow.xaml;MainWindow.xaml;Properties.xaml;UserControls\Playlist.xaml;UserControls\PopularSong.xaml;UserControls\SongItem.xaml;
 
-False
+True
 

@@ -440,3 +440,11 @@ C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Wasapi.dll
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.WinForms.dll
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.WinMM.dll
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\Images\Icons\Album.png
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.dll
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Asio.dll
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Core.dll
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Midi.dll
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.Wasapi.dll
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.WinForms.dll
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\bin\Debug\net6.0-windows\NAudio.WinMM.dll

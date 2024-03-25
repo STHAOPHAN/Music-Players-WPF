@@ -845,7 +845,6 @@ namespace WpfAppMusicPlayer
                 FillSongItems(GetSongsBySinger(selectedSinger));
                 lstSuggestions.Visibility = Visibility.Collapsed;
 			}
-			return null;
 		}
 		
         private async void BtnStart_Click(object sender, RoutedEventArgs e)

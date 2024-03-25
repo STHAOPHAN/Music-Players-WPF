@@ -1,34 +1,50 @@
 [
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChiNgaEmNang-BichPhuong-5758252.mp3",
-    "SongName": "Chị Ngả Em Nâng",
-    "SingerName": "Bích Phương",
-    "Duration": "00:03:45.6751875",
-    "Album": "Chị Ngả Em Nâng",
-    "ImgSinger": "..\\..\\..\\Images\\Bích Phương.jpg"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\KenCaChonAnh-BichPhuong-6746572.mp3",
-    "SongName": "Kén Cá Chọn Anh",
-    "SingerName": "Bích Phương",
-    "Duration": "00:03:22.4535000",
-    "Album": "Kén Cá Chọn Anh (Single)",
-    "ImgSinger": "..\\..\\..\\Images\\Bích Phương.jpg"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\DiDuDuaDi-BichPhuong-6059493.mp3",
-    "SongName": "Đi Đu Đưa Đi",
-    "SingerName": "Bích Phương",
-    "Duration": "00:03:40.2240000",
-    "Album": "Đi Đu Đưa Đi (Single)",
-    "ImgSinger": "..\\..\\..\\Images\\Bích Phương.jpg"
-  },
-  {
     "FilePath": "C:\\Users\\ADMIN\\Music\\ChiecHop-BichPhuong-7120378.mp3",
     "SongName": "Chiếc Hộp",
     "SingerName": "Bích Phương",
     "Duration": "00:03:36.1200000",
     "Album": "chiếc hộp (Single)",
     "ImgSinger": "..\\..\\..\\Images\\Bích Phương.jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\ADMIN\\Music\\ChieuNayKhongCoMuaBay-TrungQuanIdol-3314229.mp3",
+    "SongName": "Chiều Nay Không Có Mưa Bay",
+    "SingerName": "Trung Quân Idol",
+    "Duration": "00:04:56.5920000",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\Trung Quân Idol.jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
+    "SongName": "Chúng Ta Của Tương Lai",
+    "SingerName": "Sơn Tùng M-TP",
+    "Duration": "00:04:09.9654375",
+    "Album": "NhacCuaTui.com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
+    "SongName": "Chúng Ta Của Tương Lai",
+    "SingerName": "Sơn Tùng M-TP",
+    "Duration": "00:04:09.9654375",
+    "Album": "NhacCuaTui.com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\ADMIN\\Music\\AmThamBenEm-SonTungMTP.mp3",
+    "SongName": "Âm Thầm Bên Em",
+    "SingerName": "Sơn Tùng (M-TP)",
+    "Duration": "00:04:51.3266250",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng (M-TP).jpg"
+  },
+  {
+    "FilePath": "C:\\Users\\ADMIN\\Music\\BloodSweatTears-BTSBangtanBoys-4611195.mp3",
+    "SongName": "Blood Sweat & Tears - BTS (Bangtan Boys)",
+    "SingerName": "BTS (Bangtan Boys)",
+    "Duration": "00:03:36.2666250",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\BTS (Bangtan Boys).jpg"
   }
 ]

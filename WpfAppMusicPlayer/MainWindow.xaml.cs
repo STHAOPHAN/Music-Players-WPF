@@ -52,9 +52,7 @@ namespace WpfAppMusicPlayer
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             // Đặt giá trị ban đầu cho TextBlock là "00:00"
             timeMusicPlay.Text = "00:00";
-
-            currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
-            FillSongItems(currentListSongs);
+            FillSongItems(allListSongs);
             LoadHistory();
             FillPopular(listeningHistory);
         }
@@ -315,14 +313,29 @@ namespace WpfAppMusicPlayer
             listSongBySinger.Children.Clear();
             MediaPlayer mediaLoad = new MediaPlayer();
 
-            TextBlock textBlock1 = new TextBlock
+            TextBlock textBlock1;
+            if (listSongs.Count == allListSongs.Count)
             {
-                Text = listSongs[0].SingerName,
-                Foreground = Brushes.White,
-                FontSize = 26,
-                FontWeight = FontWeights.Bold
-            };
-            listSongBySinger.Children.Add(textBlock1);
+                textBlock1 = new TextBlock
+                {
+                    Text = "All Songs",
+                    Foreground = Brushes.White,
+                    FontSize = 26,
+                    FontWeight = FontWeights.Bold
+                };
+                listSongBySinger.Children.Add(textBlock1);
+            }
+            else
+            {
+                textBlock1 = new TextBlock
+                {
+                    Text = listSongs[0].SingerName,
+                    Foreground = Brushes.White,
+                    FontSize = 26,
+                    FontWeight = FontWeights.Bold
+                };
+                listSongBySinger.Children.Add(textBlock1);
+            }
 
             // Tiến hành điền các SongItem vào StackPanel
             int i = 0;
@@ -353,7 +366,7 @@ namespace WpfAppMusicPlayer
         {
             // Xóa tất cả các phần tử trong StackPanel trước khi điền lại
             listPopulars.Children.Clear();
-            for (int i = listSongs.Count - 1; i >= listSongs.Count - 4; i--)
+            for (int i = listSongs.Count - 1; i >= listSongs.Count - 6; i--)
             {
                 var song = listSongs.ElementAt(i);
                 // Chuyển đổi đường dẫn hình ảnh sang kiểu ImageSource
@@ -417,7 +430,7 @@ namespace WpfAppMusicPlayer
         public void AddSongToHistory(SongInfo song)
         {
             listeningHistory.Enqueue(song); // Thêm bài hát vào cuối hàng đợi
-            while (listeningHistory.Count > 4)
+            while (listeningHistory.Count > 6)
             {
                 listeningHistory.Dequeue(); // Nếu vượt quá số lượng tối đa, loại bỏ bài hát cũ nhất
             }
@@ -780,9 +793,9 @@ namespace WpfAppMusicPlayer
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
             tbMainTitle.Text = "Home";
-            LoadSongsFromFolder();
-            currentListSongs = GetSongsBySinger("Sơn Tùng M-TP");
-            FillSongItems(currentListSongs);
+            FillSongItems(allListSongs);
+            LoadHistory();
+            FillPopular(listeningHistory);
         }
 
         // Hàm loại bỏ dấu tiếng Việt
@@ -828,6 +841,7 @@ namespace WpfAppMusicPlayer
             if (_suggestedSingers.Count == 0 && string.IsNullOrEmpty(searchText))
             {
                 lstSuggestions.Visibility = Visibility.Collapsed;
+                FillSongItems(allListSongs);
             }
             else
             {

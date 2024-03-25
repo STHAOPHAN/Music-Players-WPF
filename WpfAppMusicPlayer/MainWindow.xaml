@@ -170,14 +170,9 @@
                         <uc:PopularSong Title="Blank Space" Time="04:02" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick" IsActive="True"/>
                         <uc:PopularSong Title="Love Story" Time="05:04" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
                         <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
-                    </StackPanel>
+                        <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
+                        <uc:PopularSong Title="Red Home" Time="03:27" Image="/Images/Bray.jpg" MouseDoubleClick="PopularSong_DoubleClick"/>
 
-                    <TextBlock Text="Playlists" Style="{StaticResource titleText}" Margin="0 30 0 20" FontSize="24"/>
-
-                    <!-- Playlists -->
-                    <StackPanel Orientation="Horizontal">
-                        <uc:Playlist Title="Glory" Desc="Kutless" Image="/Images/Bray.jpg"/>
-                        <uc:Playlist Title="Miracle" Desc="Fiasder" Image="/Images/Bray.jpg" Margin="40 0 0 0"/>
                     </StackPanel>
 
                 </StackPanel>

@@ -100,7 +100,7 @@ namespace WpfAppMusicPlayer {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WpfAppMusicPlayer;V1.0.0.0;component/karaokewindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WpfAppMusicPlayer;component/karaokewindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\KaraOkeWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -68,7 +68,7 @@ namespace WpfAppMusicPlayer.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WpfAppMusicPlayer;V1.0.0.0;component/usercontrols/popularsong.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WpfAppMusicPlayer;component/usercontrols/popularsong.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\UserControls\PopularSong.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

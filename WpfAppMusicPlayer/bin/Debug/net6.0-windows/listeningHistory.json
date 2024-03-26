@@ -1,50 +1,56 @@
 [
   {
-    "FilePath": "C:\\Users\\Admin\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
-    "SongName": "Chúng Ta Của Tương Lai",
-    "SingerName": "Sơn Tùng M-TP",
-    "Duration": "00:04:09.9654375",
-    "Album": "NhacCuaTui.com",
-    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
-  },
-  {
-    "FilePath": "C:\\Users\\Admin\\Music\\Chạy Ngay Đi-SonTungMTP.mp3",
-    "SongName": "Chạy Ngay Đi",
-    "SingerName": "Sơn Tùng M-TP",
-    "Duration": "00:04:08.0628750",
-    "Album": "Chạy Ngay Đi (Single)",
-    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
-  },
-  {
-    "FilePath": "C:\\Users\\Admin\\Music\\AmThamBenEm-SonTungMTP.mp3",
-    "SongName": "Âm Thầm Bên Em",
-    "SingerName": "Sơn Tùng (M-TP)",
-    "Duration": "00:04:51.3266250",
+    "FilePath": "C:\\Users\\Admin\\Music\\CanhDongYeuThuong-TrungQuanIdol-4694272.mp3",
+    "SongName": "Cánh Đồng Yêu Thương - Trung Quân Idol",
+    "SingerName": "Trung Quân Idol",
+    "Duration": "00:05:06.4950000",
     "Album": "NhacCuaTui.Com",
-    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng (M-TP).jpg"
+    "ImgSinger": "..\\..\\..\\Images\\Trung Quân Idol.jpg",
+    "Genres": "Nhạc Trẻ"
   },
   {
-    "FilePath": "C:\\Users\\Admin\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
-    "SongName": "Chúng Ta Của Tương Lai",
-    "SingerName": "Sơn Tùng M-TP",
-    "Duration": "00:04:09.9654375",
-    "Album": "NhacCuaTui.com",
-    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+    "FilePath": "C:\\Users\\Admin\\Music\\BloodSweatTears-BTSBangtanBoys-4611195.mp3",
+    "SongName": "Blood Sweat & Tears - BTS (Bangtan Boys)",
+    "SingerName": "BTS (Bangtan Boys)",
+    "Duration": "00:03:36.2666250",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\BTS (Bangtan Boys).jpg",
+    "Genres": "Hàn Quốc"
   },
   {
-    "FilePath": "C:\\Users\\Admin\\Music\\COCHACYEULADAY-SonTungMTP.mp3",
-    "SongName": "CÓ CHẮC YÊU LÀ ĐÂY",
-    "SingerName": "Sơn Tùng M-TP",
-    "Duration": "00:03:22.1668125",
-    "Album": "Có Chắc Yêu Là Đây (Single)",
-    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+    "FilePath": "C:\\Users\\Admin\\Music\\CanhDongYeuThuong-TrungQuanIdol-4694272.mp3",
+    "SongName": "Cánh Đồng Yêu Thương - Trung Quân Idol",
+    "SingerName": "Trung Quân Idol",
+    "Duration": "00:05:06.4950000",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\Trung Quân Idol.jpg",
+    "Genres": "Nhạc Trẻ"
   },
   {
-    "FilePath": "C:\\Users\\Admin\\Music\\ConMuaNgangQua-SonTungMTP.mp3",
-    "SongName": "Cơn Mưa Ngang Qua",
-    "SingerName": "Sơn Tùng M-TP",
-    "Duration": "00:04:48.1730625",
-    "Album": "NhacCuaTui.com",
-    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg"
+    "FilePath": "C:\\Users\\Admin\\Music\\ChangDeEmXaAnh2-DucPhuc-5912887.mp3",
+    "SongName": "Chẳng Để Em Xa Anh 2",
+    "SingerName": "Đức Phúc",
+    "Duration": "00:04:23.2320000",
+    "Album": "Mối Tình Đầu Của Tôi OST",
+    "ImgSinger": "..\\..\\..\\Images\\Đức Phúc.jpg",
+    "Genres": "Nhạc Trẻ"
+  },
+  {
+    "FilePath": "C:\\Users\\Admin\\Music\\CanhDongYeuThuong-TrungQuanIdol-4694272.mp3",
+    "SongName": "Cánh Đồng Yêu Thương - Trung Quân Idol",
+    "SingerName": "Trung Quân Idol",
+    "Duration": "00:05:06.4950000",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\Trung Quân Idol.jpg",
+    "Genres": "Nhạc Trẻ"
+  },
+  {
+    "FilePath": "C:\\Users\\Admin\\Music\\Charlie Puth - Attention [Official Video].mp3",
+    "SongName": "Charlie Puth - Attention [Official Video]",
+    "SingerName": "",
+    "Duration": "00:07:43.6580000",
+    "Album": null,
+    "ImgSinger": "..\\..\\..\\Images\\.jpg",
+    "Genres": ""
   }
 ]

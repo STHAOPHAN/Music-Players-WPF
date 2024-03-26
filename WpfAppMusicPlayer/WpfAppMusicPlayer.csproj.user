@@ -7,7 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="EditProperties.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="EditProperties.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Properties.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\Playlist.xaml">

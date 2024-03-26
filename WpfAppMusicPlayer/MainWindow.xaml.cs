@@ -105,11 +105,19 @@ namespace WpfAppMusicPlayer
                         // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                         currentSongIndex = songIndex;
                         var selectedSong = currentListSongs[currentSongIndex];
-                        var bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+
+                        var bitmapImage = new BitmapImage();
+                        if (System.IO.File.Exists(selectedSong.ImgSinger))
+                        {
+                            bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        }
+                        else
+                        {
+                            bitmapImage = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute));
+                        }
                         imgCurrentSinger.ImageSource = bitmapImage;
                         nameCurrentSong.Text = selectedSong.SongName;
                         nameCurrentSinger.Text = selectedSong.SingerName;
-
                         mediaPlayer.Open(new Uri(selectedSong.FilePath));
                         // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                         sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
@@ -144,11 +152,18 @@ namespace WpfAppMusicPlayer
             {
                 SongInfo song = GetSongBySongName(songPopular.Title);
 
-                var bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                var bitmapImage = new BitmapImage();
+                if (System.IO.File.Exists(song.ImgSinger))
+                {
+                    bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                }
+                else
+                {
+                    bitmapImage = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute));
+                }
                 imgCurrentSinger.ImageSource = bitmapImage;
                 nameCurrentSong.Text = song.SongName;
                 nameCurrentSinger.Text = song.SingerName;
-
                 // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                 mediaPlayer.Open(new Uri(song.FilePath));
                 // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
@@ -195,14 +210,22 @@ namespace WpfAppMusicPlayer
             foreach (string filePath in Directory.GetFiles(musicFolderPath, "*.mp3"))
             {
                 TagLib.File file = TagLib.File.Create(filePath);
-                // Lấy tiêu đề bài hát
-                string songName = file.Tag.Title;
-                // Lấy tên ca sĩ
-                string singerName = file.Tag.Artists[0];
-                string album = file.Tag.Album;
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                string? songName = file.Tag.Title;
+                string? singerName = "";
+                if (file.Tag.Artists.Length > 0)
+                {
+                    singerName = file.Tag.Artists[0];
+                }
+                string? album = file.Tag.Album;
+                string? fileName = Path.GetFileNameWithoutExtension(filePath);
+                string? genres = string.Join(", ", file.Tag.Genres);
                 TimeSpan durationSong = file.Properties.Duration;
-                string imgSinger = "..\\..\\..\\Images\\" + singerName + ".jpg";
+                string? imgSinger = "..\\..\\..\\Images\\" + singerName + ".jpg";
+                IPicture? picture = null;
+                if (file.Tag.Pictures.Length > 0)
+                {
+                    picture = file.Tag.Pictures[0];
+                }
 
                 // Sử dụng totalSeconds để khởi tạo Duration cho SongInfo
                 SongInfo songInfo = new SongInfo
@@ -212,7 +235,9 @@ namespace WpfAppMusicPlayer
                     SingerName = singerName,
                     Duration = durationSong,
                     Album = album,
-                    ImgSinger = imgSinger
+                    ImgSinger = imgSinger,
+                    Genres = genres,
+                    Picture = picture
                 };
 
                 allListSongs.Add(songInfo);
@@ -364,7 +389,7 @@ namespace WpfAppMusicPlayer
                 songItem.MouseDown += SongItem_MouseDown;
                 // Thêm UserControl SongItem vào StackPanel
 
-                songItem.ContextMenu = GetSongItemContextMenu();
+                songItem.ContextMenu = GetSongItemContextMenu(songItem.SongInfo);
                 songItem.ContextMenu.Tag = songItem.SongInfo;
                 listSongBySinger.Children.Add(songItem);
 
@@ -381,11 +406,19 @@ namespace WpfAppMusicPlayer
                 var song = listSongs.ElementAt(i);
                 // Chuyển đổi đường dẫn hình ảnh sang kiểu ImageSource
                 BitmapImage bitmapImage = new BitmapImage();
+                var popularSong = new PopularSong();
+
                 bitmapImage.BeginInit();
-                bitmapImage.UriSource = new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute);
+                if (System.IO.File.Exists(song.ImgSinger))
+                {
+                    bitmapImage.UriSource = new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute);
+                }
+                else
+                {
+                    bitmapImage.UriSource = new Uri("../../../../WpfAppMusicPlayer/Images/NoImageAvailable.jpg", UriKind.RelativeOrAbsolute);
+                }
                 bitmapImage.EndInit();
-                // Tạo một UserControl SongItem mới
-                var popularSong = new PopularSong
+                popularSong = new PopularSong
                 {
                     Title = song.SongName, // Lấy tiêu đề bài hát từ danh sách songs
                     Time = song.Duration.ToString(@"mm\:ss"), // Chuyển đổi thời lượng từ TimeSpan sang định dạng mm:ss
@@ -517,7 +550,7 @@ namespace WpfAppMusicPlayer
                     Button downloadButton = new Button
                     {
                         Content = "Download",
-                        Tag = searchResult.Id.VideoId
+                        Tag = searchResult
                     };
                     downloadButton.Click += DownloadButton_Click;
                     downloadButton.Style = buttonStyle;
@@ -582,19 +615,27 @@ namespace WpfAppMusicPlayer
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             Button downloadButton = (Button)sender;
-            string videoId = downloadButton.Tag.ToString();
+            SearchResult searchResult = (SearchResult)downloadButton.Tag;
 
-            await DownloadVideoAsMp3(videoId);
+            await DownloadVideoAsMp3(searchResult.Id.VideoId, searchResult.Snippet.Title);
         }
 
-        private async Task DownloadVideoAsMp3(string videoId)
+        private async Task DownloadVideoAsMp3(string videoId, string title)
         {
             YoutubeService youtubeService = new YoutubeService();
-            await youtubeService.DownloadVideoAsMp3(videoId);
+            await youtubeService.DownloadVideoAsMp3(videoId, title);
         }
 
         private async void btnAIGenerated_Click(object sender, RoutedEventArgs e)
         {
+            btnViewAlbums.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewAlbums.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewSongs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnHome.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnAIGenerated.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnAIGenerated.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "AI Genarated";
             listSongBySinger.Children.Clear();
             if (currentSongplayingPath != null)
@@ -674,6 +715,15 @@ namespace WpfAppMusicPlayer
 
         private void btnViewSongs_Click(object sender, RoutedEventArgs e)
         {
+
+            btnAIGenerated.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnAIGenerated.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnHome.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewAlbums.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewAlbums.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnViewSongs.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "Songs";
             LoadSongsFromFolder();
             ViewSongsList(allListSongs);
@@ -693,7 +743,7 @@ namespace WpfAppMusicPlayer
                     Title = song.SongName,
                     Time = song.Duration.ToString(@"mm\:ss")
                 };
-                songItem.ContextMenu = GetSongItemContextMenu();
+                songItem.ContextMenu = GetSongItemContextMenu(songItem.SongInfo);
                 songItem.ContextMenu.Tag = songItem.SongInfo;
 
                 songItem.MouseDown += SongItem_MouseDown;
@@ -702,7 +752,7 @@ namespace WpfAppMusicPlayer
             }
         }
 
-        private ContextMenu GetSongItemContextMenu()
+        private ContextMenu GetSongItemContextMenu(SongInfo songInfo)
         {
             ContextMenu contextMenu = new ContextMenu();
 
@@ -717,6 +767,7 @@ namespace WpfAppMusicPlayer
             {
                 MenuItem albumItem = new MenuItem() { Header = album.Name, Icon = new Image { Source = new BitmapImage(new Uri("../../../../WpfAppMusicPlayer/Images/Icons/Album.png", UriKind.RelativeOrAbsolute)) } };
                 albumItem.Click += AddToAlbum_Click;
+                albumItem.Tag = songInfo;
                 addToAlbumMenuItem.Items.Add(albumItem);
             }
 
@@ -735,11 +786,31 @@ namespace WpfAppMusicPlayer
         private void AddToAlbum_Click(object sender, RoutedEventArgs e)
         {
             // Xử lý sự kiện khi click vào Edit
+            MenuItem menuItem = (MenuItem)sender;
+            SongInfo songInfo = (SongInfo)menuItem.Tag;
+
+            TagLib.File file = TagLib.File.Create(songInfo.FilePath);
+            if (file != null)
+            {
+                file.Tag.Album = menuItem.Header.ToString();
+                file.Save();
+            }
         }
 
         private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
             // Xử lý sự kiện khi click vào Edit
+            MenuItem menuItem = (MenuItem)sender;
+
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            SongInfo songInfo = (SongInfo)contextMenu.Tag;
+
+            if (songInfo != null)
+            {
+                var editWindow = new EditProperties(songInfo);
+                editWindow.ShowDialog();
+            }
         }
 
         private void OpenFolderMenuItem_Click(object sender, RoutedEventArgs e)
@@ -758,10 +829,64 @@ namespace WpfAppMusicPlayer
         private void PropertiesMenuItem_Click(object sender, RoutedEventArgs e)
         {
             // Xử lý sự kiện khi click vào Properties
+            MenuItem menuItem = sender as MenuItem;
+
+            ContextMenu contextMenu = menuItem.Parent as ContextMenu;
+
+            SongInfo songInfo = contextMenu.Tag as SongInfo;
+
+            if (songInfo != null)
+            {
+                try
+                {
+
+                    var file = TagLib.File.Create(songInfo.FilePath);
+                    string message = $"Title: {songInfo.SongName}\n" +
+                        $"Artist: {songInfo.SingerName}\n" +
+                        $"Album: {songInfo.Album}\n" +
+                        $"Genres: {songInfo.Genres}\n" +
+                        $"Duration: {songInfo.Duration}\n" +
+                        $"File Path: {songInfo.FilePath}";
+                    // Lấy hình ảnh đầu tiên từ danh sách hình ảnh nhúng trong file nhạc (nếu có)
+                    if (songInfo.Picture != null)
+                    {
+                        var picture = file.Tag.Pictures[0];
+                        MemoryStream stream = new MemoryStream(picture.Data.Data);
+                        BitmapImage imageSource = new BitmapImage();
+                        imageSource.BeginInit();
+                        imageSource.StreamSource = stream;
+                        imageSource.EndInit();
+                        ShowPropertiesForm(imageSource, message);
+
+                    }
+                    else
+                    {
+                        ShowPropertiesForm(null, message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý nếu có lỗi xảy ra
+                    MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
+        private void ShowPropertiesForm(BitmapImage? image, string message)
+        {
+            var window = new Properties(image, message);
+            window.ShowDialog();
+        }       
 
         private void btnViewAlbums_Click(object sender, RoutedEventArgs e)
         {
+            btnAIGenerated.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnAIGenerated.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnHome.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewSongs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewAlbums.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnViewAlbums.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "Albums";
             listSongBySinger.Children.Clear();
             LoadSongsFromFolder();
@@ -833,6 +958,14 @@ namespace WpfAppMusicPlayer
         }
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
+            btnAIGenerated.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnAIGenerated.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewAlbums.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewAlbums.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnViewSongs.Background = Brushes.White; // Đặt lại màu nền của btnViewAlbums
+            btnViewSongs.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9ae5c3"));
+            btnHome.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#02be68")); // Đổi màu nền thành màu xanh
+            btnHome.Foreground = Brushes.White; // Đổi màu văn bản thành màu trắng
             tbMainTitle.Text = "Home";
             FillSongItems(allListSongs);
             LoadHistory();
@@ -955,6 +1088,37 @@ namespace WpfAppMusicPlayer
             {
                 MessageBox.Show($"Error recognizing speech: {ex.Message}");
             }
+        }
+
+        private void btnKaraOke_Click(object sender, RoutedEventArgs e)
+        {
+            KaraOkeWindow karaOkeWindow = new KaraOkeWindow();
+            karaOkeWindow.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void ButtonSmall_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra trạng thái hiện tại của cửa sổ
+            if (WindowState == WindowState.Normal)
+            {
+                // Nếu cửa sổ đang ở trạng thái bình thường, chuyển sang trạng thái phóng to
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                // Nếu cửa sổ đang ở trạng thái phóng to, chuyển sang trạng thái bình thường
+                WindowState = WindowState.Normal;
+            }
+        }
+
+        private void ButtonDesktop_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }

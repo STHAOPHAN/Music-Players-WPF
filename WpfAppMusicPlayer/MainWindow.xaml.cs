@@ -472,7 +472,18 @@ namespace WpfAppMusicPlayer
         // Thêm một bài hát vào lịch sử và lưu vào file JSON
         public void AddSongToHistory(SongInfo song)
         {
+            List<SongInfo> newHistory = new List<SongInfo>();
+
+            foreach (SongInfo s in listeningHistory)
+            {
+                if (!s.Equals(song))
+                {
+                    newHistory.Add(s);
+                }
+            }
+            listeningHistory = new Queue<SongInfo>(newHistory);
             listeningHistory.Enqueue(song); // Thêm bài hát vào cuối hàng đợi
+
             while (listeningHistory.Count > 6)
             {
                 listeningHistory.Dequeue(); // Nếu vượt quá số lượng tối đa, loại bỏ bài hát cũ nhất

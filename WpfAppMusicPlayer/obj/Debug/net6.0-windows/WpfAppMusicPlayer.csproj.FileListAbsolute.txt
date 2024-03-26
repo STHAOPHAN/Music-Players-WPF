@@ -467,3 +467,9 @@ C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.g.cs
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\EditProperties.baml
 C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.baml
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\KaraOkeWindow.baml
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\EditProperties.g.cs
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\KaraOkeWindow.g.cs
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.g.cs
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\EditProperties.baml
+D:\Semester 7\PRN211\code\MPChill\Music-Players-WPF\WpfAppMusicPlayer\obj\Debug\net6.0-windows\Properties.baml

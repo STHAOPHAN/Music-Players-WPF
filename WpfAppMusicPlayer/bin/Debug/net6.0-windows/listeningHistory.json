@@ -1,56 +1,56 @@
 [
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChungTaCuaTuongLai-SonTungMTP.mp3",
-    "SongName": "Chúng Ta Của Tương Lai",
+    "FilePath": "..\\..\\..\\Music\\AmThamBenEm-SonTungMTP.mp3",
+    "SongName": "Âm Thầm Bên Em",
+    "SingerName": "Sơn Tùng (M-TP)",
+    "Duration": "00:04:51.3266250",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng (M-TP).jpg",
+    "Genres": "Nhạc Trẻ"
+  },
+  {
+    "FilePath": "..\\..\\..\\Music\\BloodSweatTears-BTSBangtanBoys-4611195.mp3",
+    "SongName": "Blood Sweat & Tears - BTS (Bangtan Boys)",
+    "SingerName": "BTS (Bangtan Boys)",
+    "Duration": "00:03:36.2666250",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\BTS (Bangtan Boys).jpg",
+    "Genres": "Hàn Quốc"
+  },
+  {
+    "FilePath": "..\\..\\..\\Music\\BloodSweatTears-BTSBangtanBoys-4611195.mp3",
+    "SongName": "Blood Sweat & Tears - BTS (Bangtan Boys)",
+    "SingerName": "BTS (Bangtan Boys)",
+    "Duration": "00:03:36.2666250",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\BTS (Bangtan Boys).jpg",
+    "Genres": "Hàn Quốc"
+  },
+  {
+    "FilePath": "..\\..\\..\\Music\\AmThamBenEm-SonTungMTP.mp3",
+    "SongName": "Âm Thầm Bên Em",
+    "SingerName": "Sơn Tùng (M-TP)",
+    "Duration": "00:04:51.3266250",
+    "Album": "NhacCuaTui.Com",
+    "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng (M-TP).jpg",
+    "Genres": "Nhạc Trẻ"
+  },
+  {
+    "FilePath": "..\\..\\..\\Music\\COCHACYEULADAY-SonTungMTP.mp3",
+    "SongName": "CÓ CHẮC YÊU LÀ ĐÂY",
     "SingerName": "Sơn Tùng M-TP",
-    "Duration": "00:04:09.9654375",
-    "Album": "NhacCuaTui.com",
+    "Duration": "00:03:22.1668125",
+    "Album": "Có Chắc Yêu Là Đây (Single)",
     "ImgSinger": "..\\..\\..\\Images\\Sơn Tùng M-TP.jpg",
     "Genres": "Nhạc Trẻ"
   },
   {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChiNgaEmNang-BichPhuong-5758252.mp3",
-    "SongName": "Chị Ngả Em Nâng",
-    "SingerName": "Bích Phương",
-    "Duration": "00:03:45.6751875",
-    "Album": "Chị Ngả Em Nâng",
-    "ImgSinger": "..\\..\\..\\Images\\Bích Phương.jpg",
-    "Genres": "Nhạc Trẻ"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChieuNayKhongCoMuaBay-TrungQuanIdol-3314229.mp3",
-    "SongName": "Chiều Nay Không Có Mưa Bay",
-    "SingerName": "Trung Quân Idol",
-    "Duration": "00:04:56.5920000",
-    "Album": "NhacCuaTui.Com",
-    "ImgSinger": "..\\..\\..\\Images\\Trung Quân Idol.jpg",
-    "Genres": "Nhạc Trẻ"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\CanhDongYeuThuong-TrungQuanIdol-4694272.mp3",
-    "SongName": "Cánh Đồng Yêu Thương - Trung Quân Idol",
-    "SingerName": "Trung Quân Idol",
-    "Duration": "00:05:06.4950000",
-    "Album": "NhacCuaTui.Com",
-    "ImgSinger": "..\\..\\..\\Images\\Trung Quân Idol.jpg",
-    "Genres": "Nhạc Trẻ"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChangDeEmXaAnh2-DucPhuc-5912887.mp3",
-    "SongName": "Chẳng Để Em Xa Anh 2",
-    "SingerName": "Đức Phúc",
-    "Duration": "00:04:23.2320000",
-    "Album": "Mối Tình Đầu Của Tôi OST",
-    "ImgSinger": "..\\..\\..\\Images\\Đức Phúc.jpg",
-    "Genres": "Nhạc Trẻ"
-  },
-  {
-    "FilePath": "C:\\Users\\ADMIN\\Music\\ChiecHop-BichPhuong-7120378.mp3",
-    "SongName": "Chiếc Hộp",
-    "SingerName": "Bích Phương",
-    "Duration": "00:03:36.1200000",
-    "Album": "chiếc hộp (Single)",
-    "ImgSinger": "..\\..\\..\\Images\\Bích Phương.jpg",
+    "FilePath": "..\\..\\..\\Music\\ChuNhatBoy-AMEE-10528498.mp3",
+    "SongName": "Chủ Nhật Boy",
+    "SingerName": "AMEE",
+    "Duration": "00:03:00.0720000",
+    "Album": "NhacCuaTui.com",
+    "ImgSinger": "..\\..\\..\\Images\\AMEE.jpg",
     "Genres": "Nhạc Trẻ"
   }
 ]

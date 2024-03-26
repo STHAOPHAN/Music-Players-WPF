@@ -118,7 +118,7 @@ namespace WpfAppMusicPlayer
                         imgCurrentSinger.ImageSource = bitmapImage;
                         nameCurrentSong.Text = selectedSong.SongName;
                         nameCurrentSinger.Text = selectedSong.SingerName;
-                        mediaPlayer.Open(new Uri(selectedSong.FilePath));
+                        mediaPlayer.Open(new Uri(selectedSong.FilePath, UriKind.Relative));
                         // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                         sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
                         // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
@@ -165,7 +165,7 @@ namespace WpfAppMusicPlayer
                 nameCurrentSong.Text = song.SongName;
                 nameCurrentSinger.Text = song.SingerName;
                 // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
-                mediaPlayer.Open(new Uri(song.FilePath));
+                mediaPlayer.Open(new Uri(song.FilePath, UriKind.Relative));
                 // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                 sliderTimeMusic.Maximum = song.Duration.TotalSeconds;
                 // Bắt đầu gọi UpdateSliderValue để cập nhật giá trị của Slider mỗi giây
@@ -201,7 +201,8 @@ namespace WpfAppMusicPlayer
 
         private void LoadSongsFromFolder()
         {
-            string musicFolderPath = Path.GetFullPath(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));
+
+            string musicFolderPath = "..\\..\\..\\Music";
 
             if (allListSongs.Count > 0)
             {

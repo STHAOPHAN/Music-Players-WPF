@@ -99,7 +99,15 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="btnSearch" Content="Tìm kiếm" Width="100" Height="30" Margin="10 0 0 0" Click="btnSearch_Click"/>
+                    <Button x:Name="btnSearch" Content="Tìm kiếm" Foreground="White" Width="100" Height="30" Margin="10 0 0 0" Click="btnSearch_Click" FontWeight="Bold" Background="#FF02BE68">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </StackPanel>
                 <TextBlock x:Name="tbMainTitle" Text="Home" Style="{StaticResource titleText}"/>
                 <Border CornerRadius="20" Margin="0 20 0 0">
@@ -130,8 +138,8 @@
 
                             <StackPanel x:Name="formlistSinger" Margin="30">
                                 <StackPanel x:Name="searchSinger">
-                                    <TextBox x:Name="txtSearchSinger" Foreground="White" FontSize="20" FontWeight="Bold" Width="300" HorizontalAlignment="Center" TextChanged="txtSearchSinger_TextChanged" Background="#FF27A371" TextAlignment="Center"/>
-                                    <ListBox x:Name="lstSuggestions" Width="300" MaxHeight="200" ItemsSource="{Binding SuggestedSingers}" MouseDoubleClick="lstSuggestions_MouseDoubleClick" HorizontalAlignment="Center" Background="#FF33AE7E">
+                                    <TextBox x:Name="txtSearchSinger" Foreground="Black" FontSize="20" Width="300" HorizontalAlignment="Center" TextChanged="txtSearchSinger_TextChanged" Background="#FF67F9CE" TextAlignment="Center"/>
+                                    <ListBox x:Name="lstSuggestions" Width="300" MaxHeight="200" ItemsSource="{Binding SuggestedSingers}" MouseDoubleClick="lstSuggestions_MouseDoubleClick" HorizontalAlignment="Center" Background="#FF2FB38A">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding}" FontSize="20" Foreground="White"/>
@@ -152,7 +160,7 @@
                                     <uc:SongItem Number="07" Title="Hãy Trao Cho Anh" Time="06:20" MouseDown="SongItem_MouseDown"/>
 
                                 </StackPanel>
-                                
+
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
@@ -183,12 +191,12 @@
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Width="60" Height="60" Margin="30 0 0 0">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="/Images/Bray.jpg"/>
+                            <ImageBrush x:Name="imgCurrentSinger" ImageSource="/Images/Bray.jpg"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel VerticalAlignment="Center" Margin="20 0 30 0">
-                        <TextBlock Text="ME" Foreground="White" FontSize="22" FontWeight="Bold"/>
-                        <TextBlock Text="Taylor Swift" Foreground="#9ae5c3" FontSize="18" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="nameCurrentSong" Text="Tên bài hát" Foreground="White" FontSize="22" FontWeight="Bold" Width="200" MaxWidth="200"/>
+                        <TextBlock x:Name="nameCurrentSinger" Text="Taylor Swift" Foreground="#9ae5c3" FontSize="18" FontWeight="SemiBold"/>
                     </StackPanel>
 
                     <!-- Button -->

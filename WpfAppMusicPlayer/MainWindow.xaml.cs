@@ -105,6 +105,11 @@ namespace WpfAppMusicPlayer
                         // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                         currentSongIndex = songIndex;
                         var selectedSong = currentListSongs[currentSongIndex];
+                        var bitmapImage = new BitmapImage(new Uri(selectedSong.ImgSinger, UriKind.RelativeOrAbsolute));
+                        imgCurrentSinger.ImageSource = bitmapImage;
+                        nameCurrentSong.Text = selectedSong.SongName;
+                        nameCurrentSinger.Text = selectedSong.SingerName;
+
                         mediaPlayer.Open(new Uri(selectedSong.FilePath));
                         // Cập nhật giá trị tối đa của Slider là thời gian tổng của bài hát
                         sliderTimeMusic.Maximum = selectedSong.Duration.TotalSeconds;
@@ -138,6 +143,11 @@ namespace WpfAppMusicPlayer
             if (songPopular != null)
             {
                 SongInfo song = GetSongBySongName(songPopular.Title);
+
+                var bitmapImage = new BitmapImage(new Uri(song.ImgSinger, UriKind.RelativeOrAbsolute));
+                imgCurrentSinger.ImageSource = bitmapImage;
+                nameCurrentSong.Text = song.SongName;
+                nameCurrentSinger.Text = song.SingerName;
 
                 // Nếu không phải là bài hát đang phát, chuyển sang bài hát mới
                 mediaPlayer.Open(new Uri(song.FilePath));
@@ -457,19 +467,41 @@ namespace WpfAppMusicPlayer
                 string json = System.IO.File.ReadAllText("listeningHistory.json");
                 if (!string.IsNullOrEmpty(json))
                 {
-                    listeningHistory = new Queue<SongInfo>(JsonConvert.DeserializeObject<SongInfo[]>(json));
+                    SongInfo[] songsInHistory = JsonConvert.DeserializeObject<SongInfo[]>(json);
+
+                    // Lọc ra các bài hát trong lịch sử mà có trong allListSongs
+                    List<SongInfo> validSongs = songsInHistory.Where(song => allListSongs.Any(s => s.FilePath == song.FilePath)).ToList();
+
+                    // Tạo Queue từ các bài hát hợp lệ
+                    listeningHistory = new Queue<SongInfo>(validSongs);
                 }
             }
         }
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            tbMainTitle.Text = "Search On Youtube";
+            tbMainTitle.Text = "Search On YouTube";
             string searchQuery = txtSearchQuery.Text.Trim();
             YoutubeService youtubeService = new YoutubeService();
             SearchListResponse result = await youtubeService.SearchOnYouTube(searchQuery);
+            listSongBySinger.Children.Clear();
 
-            formlistSinger.Children.Clear();
+            // Tạo Style cho Button
+            Style buttonStyle = new Style(typeof(Button));
+            buttonStyle.Setters.Add(new Setter(Control.BackgroundProperty, new SolidColorBrush(Color.FromRgb(2, 190, 104))));
+            buttonStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.White));
+            buttonStyle.Setters.Add(new Setter(Control.PaddingProperty, new Thickness(10, 5, 10, 5)));
+            buttonStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
+            buttonStyle.Setters.Add(new Setter(Control.MarginProperty, new Thickness(5, 0, 15, 0))); // Thêm margin cho Button
+
+            // Tạo Style cho TextBox
+            Style textBoxStyle = new Style(typeof(System.Windows.Controls.TextBox));
+            textBoxStyle.Setters.Add(new Setter(Control.ForegroundProperty, Brushes.White));
+            textBoxStyle.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
+            textBoxStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
+            textBoxStyle.Setters.Add(new Setter(Control.PaddingProperty, new Thickness(5)));
+            textBoxStyle.Setters.Add(new Setter(Control.MarginProperty, new Thickness(0, 15, 0, 0))); // Thêm margin cho TextBox
+
             foreach (var searchResult in result.Items)
             {
                 if (searchResult.Id.Kind == "youtube#video")
@@ -480,6 +512,7 @@ namespace WpfAppMusicPlayer
                         Tag = searchResult.Id.VideoId
                     };
                     openLinkButton.Click += OpenLinkButton_Click;
+                    openLinkButton.Style = buttonStyle;
 
                     Button downloadButton = new Button
                     {
@@ -487,31 +520,39 @@ namespace WpfAppMusicPlayer
                         Tag = searchResult.Id.VideoId
                     };
                     downloadButton.Click += DownloadButton_Click;
+                    downloadButton.Style = buttonStyle;
 
-                    Grid grid = new Grid();
-                    grid.ColumnDefinitions.Add(new ColumnDefinition());
-                    grid.ColumnDefinitions.Add(new ColumnDefinition());
-
-                    // Tiêu đề
                     System.Windows.Controls.TextBox titleBlock = new System.Windows.Controls.TextBox
                     {
                         Text = searchResult.Snippet.Title,
                         FontSize = 20,
                         FontWeight = FontWeights.Bold,
-                        Margin = new Thickness(0, 0, 10, 0),
                         IsReadOnly = true,
-                        IsReadOnlyCaretVisible = false,
-                        Background = Brushes.Transparent
+                        IsReadOnlyCaretVisible = false
                     };
+                    titleBlock.Style = textBoxStyle;
+
+                    Grid grid = new Grid();
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                    Grid.SetRow(titleBlock, 0);
+                    grid.Children.Add(titleBlock);
+
+                    Grid buttonGrid = new Grid();
+                    buttonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                    buttonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
                     Grid.SetColumn(openLinkButton, 0);
-                    grid.Children.Add(openLinkButton);
+                    buttonGrid.Children.Add(openLinkButton);
 
                     Grid.SetColumn(downloadButton, 1);
-                    grid.Children.Add(downloadButton);
+                    buttonGrid.Children.Add(downloadButton);
 
-                    formlistSinger.Children.Add(titleBlock);
-                    formlistSinger.Children.Add(grid);
+                    Grid.SetRow(buttonGrid, 1);
+                    grid.Children.Add(buttonGrid);
+
+                    listSongBySinger.Children.Add(grid);
                 }
             }
         }
@@ -555,7 +596,7 @@ namespace WpfAppMusicPlayer
         private async void btnAIGenerated_Click(object sender, RoutedEventArgs e)
         {
             tbMainTitle.Text = "AI Genarated";
-            formlistSinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             if (currentSongplayingPath != null)
             {
                 var cloudStorageHelper = new CloudStorageHelper();
@@ -580,7 +621,7 @@ namespace WpfAppMusicPlayer
                             TextWrapping = TextWrapping.Wrap
                         };
 
-                        formlistSinger.Children.Add(textBlock);
+                        listSongBySinger.Children.Add(textBlock);
                     }
                 }
                 /*                var requestBody = new
@@ -640,7 +681,7 @@ namespace WpfAppMusicPlayer
 
         private void ViewSongsList(List<SongInfo> songs)
         {
-            formlistSinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             int i = 0;
             foreach (var song in songs)
             {
@@ -656,7 +697,7 @@ namespace WpfAppMusicPlayer
                 songItem.ContextMenu.Tag = songItem.SongInfo;
 
                 songItem.MouseDown += SongItem_MouseDown;
-                formlistSinger.Children.Add(songItem);
+                listSongBySinger.Children.Add(songItem);
 
             }
         }
@@ -722,7 +763,7 @@ namespace WpfAppMusicPlayer
         private void btnViewAlbums_Click(object sender, RoutedEventArgs e)
         {
             tbMainTitle.Text = "Albums";
-            formlistSinger.Children.Clear();
+            listSongBySinger.Children.Clear();
             LoadSongsFromFolder();
             AddAlbumsList(allListSongs);
             int i = 0;
@@ -737,7 +778,7 @@ namespace WpfAppMusicPlayer
                 };
                 songItem.Tag = album.Songs;
                 songItem.MouseDown += AlbumItem_MouseDown;
-                formlistSinger.Children.Add(songItem);
+                listSongBySinger.Children.Add(songItem);
             }
         }
 

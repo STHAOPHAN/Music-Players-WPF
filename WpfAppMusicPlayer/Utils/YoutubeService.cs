@@ -42,7 +42,7 @@ namespace WpfAppMusicPlayer.Utils
             return searchListResponse;
         }
 
-        public async Task DownloadVideoAsMp3(string videoId)
+        public async Task DownloadVideoAsMp3(string videoId, string videoName)
         {
             try
             {
@@ -67,7 +67,9 @@ namespace WpfAppMusicPlayer.Utils
                 File.Delete(outputPath);
 
                 File.Move(tempOutputPath, outputPath);
-
+                TagLib.File file = TagLib.File.Create(outputPath);
+                file.Tag.Title = videoName;
+                file.Save();
                 MessageBoxResult result = MessageBox.Show("Video đã được tải xuống và chuyển đổi thành công thành mp3.\nBạn muốn mở thư mục?", "Thông báo", MessageBoxButton.YesNo);
 
                 switch (result)

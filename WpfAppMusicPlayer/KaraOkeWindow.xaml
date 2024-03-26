@@ -33,7 +33,7 @@
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="#02be68" CornerRadius="100">
-                            <Image Source="C:\Users\Admin\Desktop\Music\Music-Players-WPF\WpfAppMusicPlayer\Images\microphone-8-xxl.png" Stretch="Uniform" Width="150" Height="50" Margin="0,50,2,50" />
+                            <Image Source="D:\Git\Music-Players-WPF\WpfAppMusicPlayer\Images\microphone-8-xxl.png" Stretch="Uniform" Width="150" Height="50" Margin="0,50,2,50" />
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
